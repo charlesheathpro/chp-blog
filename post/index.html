@@ -295,6 +295,71 @@
     }
     .btn-gold:hover { background: var(--gold-hover); transform: translateY(-1px); }
 
+    /* ── Read Next ───────────────────────────────────── */
+    .related-wrap {
+      margin: 40px 0 0;
+    }
+    .related-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .related-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 700px) { .related-grid { grid-template-columns: 1fr; } }
+    .related-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .related-card:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .related-card-cat {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .related-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.4;
+    }
+    .related-card-date { font-size: 12px; color: var(--text-light); }
+    .related-card-link {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-top: auto;
+      padding-top: 8px;
+    }
+    .related-card:hover .related-card-link { color: var(--gold); }
+
     /* ── Post footer ─────────────────────────────────── */
     .post-footer {
       display: flex;
@@ -644,6 +709,8 @@
           <a href="https://coloradohomeprotection.net" class="btn-gold">See Options →</a>
         </div>
 
+        <div class="related-wrap" id="related-wrap"></div>
+
         <div class="post-footer">
           <a href="/" class="back-link">← Back to all articles</a>
           <button class="share-btn" id="share-btn" onclick="handleShare('${escapedTitle}')" type="button">
@@ -654,6 +721,7 @@
 
     document.getElementById('cta-section').style.display    = '';
     document.getElementById('footer-section').style.display = '';
+    loadRelated(post);
   }
 
   /* ── Error ───────────────────────────────────────────── */
@@ -665,6 +733,47 @@
       </div>`;
     document.getElementById('cta-section').style.display    = '';
     document.getElementById('footer-section').style.display = '';
+  }
+
+  /* ── Related posts ───────────────────────────────────── */
+  function formatDate(iso) {
+    if (!iso) return '';
+    return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  async function loadRelated(currentPost) {
+    const wrap = document.getElementById('related-wrap');
+    if (!wrap) return;
+    try {
+      const res  = await fetch('/api/feed?page=1');
+      const data = await res.json();
+      if (!data.posts) return;
+
+      const others = data.posts.filter(p => p.slug !== currentPost.slug);
+
+      // Prefer posts sharing a label with the current post
+      const currentLabels = new Set(currentPost.labels || []);
+      const scored = others.map(p => ({
+        post:  p,
+        score: (p.labels || []).filter(l => currentLabels.has(l)).length,
+      }));
+      scored.sort((a, b) => b.score - a.score);
+      const picks = scored.slice(0, 3).map(s => s.post);
+      if (picks.length === 0) return;
+
+      wrap.innerHTML = `
+        <div class="related-label">Read Next</div>
+        <div class="related-heading">More for Colorado Homeowners</div>
+        <div class="related-grid">
+          ${picks.map(p => `
+            <a href="${p.canonicalUrl}" class="related-card">
+              <div class="related-card-cat">${p.labels?.[0] || 'Resource Guide'}</div>
+              <div class="related-card-title">${p.title}</div>
+              <div class="related-card-date">${formatDate(p.published)}</div>
+              <div class="related-card-link">Read article →</div>
+            </a>`).join('')}
+        </div>`;
+    } catch {}
   }
 
   /* ── Boot ────────────────────────────────────────────── */
