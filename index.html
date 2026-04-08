@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colorado Home Protection | Homeowner Resource Center</title>
+  <meta name="description" content="Educational guides for Colorado homeowners on mortgage protection and life insurance. Learn how to keep your family's home safe no matter what happens.">
+  <meta property="og:title" content="Colorado Home Protection | Homeowner Resource Center">
+  <meta property="og:description" content="Guides to help Colorado homeowners understand mortgage protection and life insurance options.">
+  <meta property="og:url" content="https://blog.coloradohomeprotection.net">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #1a3256;
+      --navy-dark:  #0f1e38;
+      --navy-mid:   #1e3a5f;
+      --gold:       #c49a2e;
+      --gold-hover: #d4aa3e;
+      --text-dark:  #1e293b;
+      --text-mid:   #475569;
+      --text-light: #94a3b8;
+      --bg:         #f8fafc;
+      --bg-card:    #ffffff;
+      --border:     #e2e8f0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* ── Navigation ────────────────────────────────────── */
+    .nav {
+      background: var(--navy-dark);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .logo-brand {
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: #fff;
+      line-height: 1;
+    }
+    .logo-sub {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      line-height: 1;
+      margin-top: 3px;
+    }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy-dark);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 9px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+    .nav-cta:hover { background: var(--gold-hover); }
+
+    /* ── Hero ──────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(140deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
+      padding: 80px 24px 88px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -80px;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: rgba(196,154,46,0.06);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -60px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.025);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,154,46,0.12);
+      border: 1px solid rgba(196,154,46,0.28);
+      border-radius: 100px;
+      padding: 6px 16px;
+      margin-bottom: 28px;
+    }
+    .hero-badge span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(30px, 5vw, 52px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.18;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.68);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.75;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .hero-stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 3px;
+    }
+
+    /* ── Posts Section ─────────────────────────────────── */
+    .posts-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 24px 48px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 36px;
+    }
+
+    /* ── Loading ───────────────────────────────────────── */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 80px 24px;
+      color: var(--text-light);
+      font-size: 14px;
+      grid-column: 1 / -1;
+    }
+    .loading-spinner {
+      width: 34px;
+      height: 34px;
+      border: 3px solid var(--border);
+      border-top-color: var(--navy);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Post Grid ─────────────────────────────────────── */
+    .post-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    @media (max-width: 960px)  { .post-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 600px)  { .post-grid { grid-template-columns: 1fr; } }
+
+    /* ── Post Card ─────────────────────────────────────── */
+    .post-card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: box-shadow 0.22s ease, transform 0.22s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .post-card:hover {
+      box-shadow: 0 16px 48px rgba(0,0,0,0.10);
+      transform: translateY(-3px);
+    }
+    .post-thumb {
+      width: 100%;
+      height: 196px;
+      object-fit: cover;
+      display: block;
+    }
+    .post-thumb-placeholder {
+      width: 100%;
+      height: 196px;
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .post-card-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .post-cat {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(196,154,46,0.1);
+      border: 1px solid rgba(196,154,46,0.2);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .post-date {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+    .post-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+    .post-excerpt {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .post-read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      transition: color 0.18s;
+    }
+    .post-card:hover .post-read-more { color: var(--gold); }
+    .post-card:hover .arrow-icon { transform: translateX(3px); }
+    .arrow-icon { transition: transform 0.18s; display: inline-block; }
+
+    /* ── CTA Banner ────────────────────────────────────── */
+    .cta-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 72px;
+    }
+    .cta-banner {
+      background: linear-gradient(140deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
+      border-radius: 20px;
+      padding: 60px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(196,154,46,0.07);
+      pointer-events: none;
+    }
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -90px; left: -50px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.025);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+    .cta-banner p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.62);
+      max-width: 480px;
+      margin: 0 auto 34px;
+      line-height: 1.75;
+    }
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--navy-dark);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 15px 34px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .btn-gold:hover { background: var(--gold-hover); transform: translateY(-1px); }
+    .cta-checks {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+    .cta-check {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+    }
+    .check-icon { color: var(--gold); }
+
+    /* ── Footer ────────────────────────────────────────── */
+    .footer {
+      background: var(--navy-dark);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.38);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.22);
+    }
+
+    /* ── Responsive ────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .hero { padding: 60px 20px 72px; }
+      .hero-stats { gap: 28px; }
+      .logo-text { display: none; }
+      .cta-banner { padding: 44px 24px; }
+      .cta-checks { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="Colorado Home Protection Blog">
+      <svg width="38" height="45" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 2L42 10V28C42 41 22 51 22 51C22 51 2 41 2 28V10L22 2Z" fill="#1a3256" stroke="#c49a2e" stroke-width="1.5"/>
+        <path d="M11 30L22 18L33 30" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="17" y="30" width="10" height="10" rx="1" fill="white"/>
+        <rect x="20.5" y="34" width="3" height="6" rx="0.5" fill="#1a3256"/>
+      </svg>
+      <div class="logo-text">
+        <span class="logo-brand">COLORADO</span>
+        <span class="logo-sub">HOME PROTECTION</span>
+      </div>
+    </a>
+    <a href="https://coloradohomeprotection.net" class="nav-cta">Get Free Quote</a>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span>Colorado Homeowner Resources</span>
+    </div>
+    <h1>Protect What <em>Matters Most</em><br>to Your Family</h1>
+    <p>Straightforward guides to help Colorado homeowners understand mortgage protection and life insurance — no jargon, no pressure.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">5 min</div>
+        <div class="hero-stat-label">Average read time</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">Free</div>
+        <div class="hero-stat-label">Always</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">Local</div>
+        <div class="hero-stat-label">Colorado focused</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Posts ──────────────────────────────────────────── -->
+<section class="posts-section">
+  <div class="section-label">Latest Guides</div>
+  <div class="section-title">Resources for Colorado Homeowners</div>
+  <div class="post-grid" id="feed">
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      <span>Loading articles…</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────── -->
+<div class="cta-wrap">
+  <div class="cta-banner">
+    <div class="cta-inner">
+      <h2>Ready to Protect Your Mortgage?</h2>
+      <p>A local Colorado agent will review your situation and show you exactly what coverage options are available — in about 10 minutes.</p>
+      <a href="https://coloradohomeprotection.net" class="btn-gold">
+        See What I Qualify For
+        <span class="arrow-icon">→</span>
+      </a>
+      <div class="cta-checks">
+        <div class="cta-check">
+          <span class="check-icon">✓</span> Takes 30 seconds
+        </div>
+        <div class="cta-check">
+          <span class="check-icon">✓</span> No obligation
+        </div>
+        <div class="cta-check">
+          <span class="check-icon">✓</span> Local Colorado broker
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Footer ─────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="https://coloradohomeprotection.net">Main Site</a>
+      <a href="https://coloradohomeprotection.net/privacy">Privacy Policy</a>
+      <a href="mailto:Charlesheathpro@gmail.com">Contact</a>
+    </div>
+    <p class="footer-copy">© 2026 Colorado Home Protection · blog.coloradohomeprotection.net</p>
+  </div>
+</footer>
+
+<script>
+  /* ── Config ──────────────────────────────────────────── */
+  const RSS_URL = 'https://cohomeprotection.blogspot.com/feeds/posts/default';
+  const API_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&count=50`;
+
+  /* ── Helpers ─────────────────────────────────────────── */
+  function stripHtml(html) {
+    const d = document.createElement('div');
+    d.innerHTML = html;
+    return d.textContent || d.innerText || '';
+  }
+
+  function excerpt(html, maxLen) {
+    const text = stripHtml(html).trim().replace(/\s+/g, ' ');
+    return text.length > maxLen ? text.slice(0, maxLen).trimEnd() + '…' : text;
+  }
+
+  function formatDate(dateStr) {
+    return new Date(dateStr).toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+  }
+
+  function slugFromUrl(url) {
+    const parts = url.split('/');
+    return parts[parts.length - 1].replace('.html', '');
+  }
+
+  function postHref(post) {
+    const slug = slugFromUrl(post.link);
+    // Store post data so the post page doesn't need a second fetch when navigating from here
+    try { sessionStorage.setItem('chp_post_' + slug, JSON.stringify(post)); } catch {}
+    return `/post/?slug=${encodeURIComponent(slug)}`;
+  }
+
+  /* ── Render card ─────────────────────────────────────── */
+  function renderCard(post) {
+    const href = postHref(post);
+    const hasThumbnail = post.thumbnail && post.thumbnail.length > 10;
+    const thumb = hasThumbnail
+      ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title.replace(/"/g, '&quot;')}" loading="lazy">`
+      : `<div class="post-thumb-placeholder">
+           <svg width="40" height="48" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M22 2L42 10V28C42 41 22 51 22 51C22 51 2 41 2 28V10L22 2Z" fill="rgba(255,255,255,0.12)" stroke="rgba(196,154,46,0.4)" stroke-width="1.5"/>
+             <path d="M11 30L22 18L33 30" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+             <rect x="17" y="30" width="10" height="10" rx="1" fill="rgba(255,255,255,0.4)"/>
+           </svg>
+         </div>`;
+
+    const cat = (post.categories && post.categories.length > 0)
+      ? post.categories[0]
+      : 'Resource Guide';
+
+    return `
+      <a href="${href}" class="post-card">
+        ${thumb}
+        <div class="post-card-body">
+          <div class="post-meta">
+            <span class="post-cat">${cat}</span>
+            <span class="post-date">${formatDate(post.pubDate)}</span>
+          </div>
+          <div class="post-title">${post.title}</div>
+          <p class="post-excerpt">${excerpt(post.description || post.content, 145)}</p>
+          <span class="post-read-more">
+            Read Article <span class="arrow-icon">→</span>
+          </span>
+        </div>
+      </a>`;
+  }
+
+  /* ── Fetch & render ──────────────────────────────────── */
+  fetch(API_URL)
+    .then(r => r.json())
+    .then(data => {
+      const feed = document.getElementById('feed');
+      if (!data.items || data.items.length === 0) {
+        feed.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">No articles found yet. Check back soon.</p>';
+        return;
+      }
+      feed.innerHTML = data.items.map(renderCard).join('');
+    })
+    .catch(() => {
+      document.getElementById('feed').innerHTML =
+        '<p style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">Unable to load articles. Please try again later.</p>';
+    });
+</script>
+</body>
+</html>

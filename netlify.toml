@@ -1,0 +1,26 @@
+[build]
+  publish = "."
+
+# Serve post/index.html for any /post/* path (preserves query strings)
+[[redirects]]
+  from = "/post/*"
+  to   = "/post/index.html"
+  status = 200
+
+# Security & caching headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/post/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
