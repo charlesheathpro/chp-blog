@@ -7,6 +7,9 @@
 [functions]
   directory = "netlify/functions"
 
+[functions."generate-images"]
+  schedule = "@hourly"
+
 # ── API routes → Netlify Functions ──────────────────────
 [[redirects]]
   from   = "/api/feed"
@@ -17,6 +20,12 @@
 [[redirects]]
   from   = "/api/post"
   to     = "/.netlify/functions/post"
+  status = 200
+  force  = true
+
+[[redirects]]
+  from   = "/api/post-image"
+  to     = "/.netlify/functions/post-image"
   status = 200
   force  = true
 

@@ -32,11 +32,13 @@ function rewriteLinks(html) {
   );
 }
 
-function bestImage(entry, content) {
+function bestImage(entry, content, slug) {
   const thumb = entry['media$thumbnail'];
   if (thumb?.url) return thumb.url.replace(/\/s\d+(-c)?\//g, '/s1200/');
   const m = (content || '').match(/<img[^>]+src=["']([^"']+)["']/i);
-  return m ? m[1] : null;
+  if (m) return m[1];
+  // Fall back to AI-generated image
+  return slug ? `/api/post-image?slug=${encodeURIComponent(slug)}` : null;
 }
 
 function normalize(entry) {
@@ -55,7 +57,7 @@ function normalize(entry) {
     updated,
     excerpt: toExcerpt(content),
     content,
-    image: bestImage(entry, content),
+    image: bestImage(entry, content, slug),
     labels,
     canonicalUrl: `${SITE_BASE}/post/?slug=${encodeURIComponent(slug)}`,
     bloggerUrl,

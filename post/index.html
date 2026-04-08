@@ -700,7 +700,8 @@
     const cat          = post.labels?.[0] || 'Resource Guide';
     const featuredImg  = post.image
       ? `<div class="featured-img-wrap">
-           <img class="featured-img" src="${post.image}" alt="${post.title.replace(/"/g,'&quot;')}" loading="eager">
+           <img class="featured-img" src="${post.image}" alt="${post.title.replace(/"/g,'&quot;')}" loading="eager"
+             onerror="this.closest('.featured-img-wrap').remove()">
          </div>`
       : '';
     const escapedTitle = post.title.replace(/'/g, "\\'").replace(/"/g, '&quot;');

@@ -644,7 +644,8 @@
   function renderCard(post) {
     const cat   = post.labels?.[0] || 'Resource Guide';
     const thumb = post.image
-      ? `<img class="post-thumb" src="${post.image}" alt="${post.title.replace(/"/g,'&quot;')}" loading="lazy">`
+      ? `<img class="post-thumb" src="${post.image}" alt="${post.title.replace(/"/g,'&quot;')}" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">${placeholderSvg().replace('class="post-thumb-placeholder"','class="post-thumb-placeholder" style="display:none"')}`
       : placeholderSvg();
 
     return `
