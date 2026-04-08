@@ -5,12 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="page-title">Loading… | Colorado Home Protection</title>
   <meta name="description" id="page-desc" content="Educational resources for Colorado homeowners on mortgage protection and life insurance.">
+  <meta name="robots" content="index, follow">
   <meta property="og:title" id="og-title" content="Colorado Home Protection">
   <meta property="og:description" id="og-desc" content="Educational resources for Colorado homeowners.">
   <meta property="og:type" content="article">
+  <meta property="og:url" id="og-url" content="">
   <meta property="og:image" id="og-image" content="">
+  <meta property="og:site_name" content="Colorado Home Protection Blog">
   <meta property="article:published_time" id="og-published" content="">
   <meta property="article:modified_time" id="og-modified" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" id="twitter-title" content="">
+  <meta name="twitter:description" id="twitter-desc" content="">
+  <meta name="twitter:image" id="twitter-image" content="">
   <link rel="canonical" id="canonical" href="https://blog.coloradohomeprotection.net/post/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -643,50 +650,77 @@
   }
 
   function setMeta(post) {
-    const title = post.title + ' | Colorado Home Protection';
-    document.getElementById('page-title').textContent   = title;
-    document.getElementById('page-desc').content        = post.excerpt;
-    document.getElementById('og-title').content         = post.title;
-    document.getElementById('og-desc').content          = post.excerpt;
-    document.getElementById('og-published').content     = post.published || '';
-    document.getElementById('og-modified').content      = post.updated  || '';
-    document.getElementById('canonical').href           = post.canonicalUrl;
-    if (post.image) document.getElementById('og-image').content = post.image;
+    const title    = post.title + ' | Colorado Home Protection';
+    const absImage = post.image
+      ? (post.image.startsWith('http') ? post.image : `${SITE_BASE}${post.image}`)
+      : '';
+
+    document.getElementById('page-title').textContent  = title;
+    document.getElementById('page-desc').content       = post.excerpt;
+    document.getElementById('og-title').content        = post.title;
+    document.getElementById('og-desc').content         = post.excerpt;
+    document.getElementById('og-url').content          = post.canonicalUrl;
+    document.getElementById('og-published').content    = post.published || '';
+    document.getElementById('og-modified').content     = post.updated  || '';
+    document.getElementById('canonical').href          = post.canonicalUrl;
+    document.getElementById('twitter-title').content  = title;
+    document.getElementById('twitter-desc').content   = post.excerpt;
+    if (absImage) {
+      document.getElementById('og-image').content     = absImage;
+      document.getElementById('twitter-image').content = absImage;
+    }
   }
 
   function injectJsonLd(post) {
-    const schema = {
-      '@context':         'https://schema.org',
-      '@type':            'BlogPosting',
-      headline:           post.title,
-      description:        post.excerpt,
-      datePublished:      post.published,
-      dateModified:       post.updated || post.published,
-      url:                post.canonicalUrl,
-      image:              post.image || undefined,
+    const cat      = post.labels?.[0] || 'Resource Guide';
+    const absImage = post.image
+      ? (post.image.startsWith('http') ? post.image : `${SITE_BASE}${post.image}`)
+      : undefined;
+
+    const blogPosting = {
+      '@context':    'https://schema.org',
+      '@type':       'BlogPosting',
+      headline:      post.title,
+      description:   post.excerpt,
+      datePublished: post.published,
+      dateModified:  post.updated || post.published,
+      url:           post.canonicalUrl,
+      image:         absImage,
       author: {
         '@type': 'Person',
         name:    'Charles Heath',
         url:     'https://coloradohomeprotection.net',
+        sameAs:  ['https://coloradohomeprotection.net'],
       },
       publisher: {
         '@type': 'Organization',
+        '@id':   'https://coloradohomeprotection.net/#org',
         name:    'Colorado Home Protection',
         url:     'https://coloradohomeprotection.net',
-        logo: {
-          '@type': 'ImageObject',
-          url: `${SITE_BASE}/favicon.svg`,
-        },
+        logo:    { '@type': 'ImageObject', url: `${SITE_BASE}/favicon.svg` },
       },
-      mainEntityOfPage: {
-        '@type': 'WebPage',
-        '@id':   post.canonicalUrl,
-      },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': post.canonicalUrl },
+      keywords: (post.labels || []).join(', ') || 'Colorado mortgage protection, life insurance',
+      articleSection: cat,
+      inLanguage: 'en-US',
     };
-    const s = document.createElement('script');
-    s.type = 'application/ld+json';
-    s.textContent = JSON.stringify(schema);
-    document.head.appendChild(s);
+
+    const breadcrumb = {
+      '@context': 'https://schema.org',
+      '@type':    'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home',  item: `${SITE_BASE}/` },
+        { '@type': 'ListItem', position: 2, name: cat,     item: `${SITE_BASE}/?label=${encodeURIComponent(cat)}` },
+        { '@type': 'ListItem', position: 3, name: post.title, item: post.canonicalUrl },
+      ],
+    };
+
+    [blogPosting, breadcrumb].forEach(obj => {
+      const s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.textContent = JSON.stringify(obj);
+      document.head.appendChild(s);
+    });
   }
 
   /* ── Share ───────────────────────────────────────────── */

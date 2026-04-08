@@ -30,6 +30,12 @@
   status = 200
   force  = true
 
+[[redirects]]
+  from   = "/sitemap.xml"
+  to     = "/.netlify/functions/sitemap"
+  status = 200
+  force  = true
+
 # ── Post pages (query-string routing, serves post/index.html) ──
 [[redirects]]
   from   = "/post/*"
@@ -55,3 +61,8 @@
   for = "/favicon.svg"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
