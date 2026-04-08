@@ -497,6 +497,20 @@
     .footer-disclaimer { font-size: 11px; color: rgba(255,255,255,0.18); max-width: 520px; line-height: 1.6; }
 
     /* ── Loading / error ─────────────────────────────── */
+    /* ── Inline backlinks ────────────────────────────────── */
+    .article-body a.inline-backlink {
+      color: var(--navy);
+      text-decoration: underline;
+      text-decoration-color: rgba(30,58,95,0.35);
+      text-decoration-thickness: 1px;
+      font-weight: 500;
+      transition: color 0.18s, text-decoration-color 0.18s;
+    }
+    .article-body a.inline-backlink:hover {
+      color: var(--gold);
+      text-decoration-color: var(--gold);
+    }
+
     .state-center {
       text-align: center;
       padding: 100px 24px;
@@ -765,31 +779,133 @@
     document.getElementById('footer-section').style.display = '';
   }
 
-  /* ── Related posts ───────────────────────────────────── */
-  function formatDate(iso) {
-    if (!iso) return '';
-    return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  /* ── Fetch all posts across all pages (capped at 5 pages) ── */
+  async function fetchAllPosts() {
+    const first = await fetch('/api/feed?page=1').then(r => r.json());
+    if (!first.posts) return [];
+
+    const totalPages = Math.min(first.pagination?.totalPages || 1, 5);
+    if (totalPages === 1) return first.posts;
+
+    const rest = await Promise.all(
+      Array.from({ length: totalPages - 1 }, (_, i) =>
+        fetch(`/api/feed?page=${i + 2}`).then(r => r.json()).then(d => d.posts || [])
+      )
+    );
+    return [...first.posts, ...rest.flat()];
   }
 
+  /* ── Inline backlink injection ─────────────────────────── */
+  const STOP_WORDS = new Set([
+    'about','after','also','always','are','been','before','being','between',
+    'but','can','could','does','doing','done','each','even','every','find',
+    'from','get','gets','got','have','having','help','here','home','how',
+    'into','its','just','know','like','make','many','more','most','much',
+    'need','needs','not','now','often','once','only','other','our','out',
+    'over','plan','right','should','some','take','than','that','their',
+    'them','then','there','they','this','time','under','until','use','used',
+    'using','want','well','what','when','where','which','while','will',
+    'with','work','would','your',
+    // short words caught by length filter but worth excluding
+    'the','and','for','you','can','are','not','was','has','had',
+  ]);
+
+  function titleToKeywords(title) {
+    return title.toLowerCase()
+      .replace(/[^a-z0-9 ]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length > 4 && !STOP_WORDS.has(w));
+  }
+
+  function injectInlineLinks(articleEl, otherPosts) {
+    if (!articleEl) return;
+
+    // Build phrase → post map; longer phrases take priority
+    const targets = [];
+    for (const post of otherPosts) {
+      const kw = titleToKeywords(post.title);
+      if (kw.length >= 2) {
+        targets.push({ phrase: `${kw[0]} ${kw[1]}`, post });
+      } else if (kw.length === 1) {
+        targets.push({ phrase: kw[0], post });
+      }
+    }
+    targets.sort((a, b) => b.phrase.length - a.phrase.length);
+
+    const usedSlugs = new Set();
+    let linkCount   = 0;
+    const MAX_LINKS = 4;
+
+    // Collect text nodes not already inside <a> or heading tags
+    const walker = document.createTreeWalker(articleEl, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        const p = node.parentElement;
+        if (!p) return NodeFilter.FILTER_REJECT;
+        if (p.closest('a, h1, h2, h3, h4, h5, h6')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+    const textNodes = [];
+    let n;
+    while ((n = walker.nextNode())) textNodes.push(n);
+
+    for (const target of targets) {
+      if (linkCount >= MAX_LINKS) break;
+      if (usedSlugs.has(target.post.slug)) continue;
+
+      const escaped = target.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex   = new RegExp(`(?<![\\w-])(${escaped})(?![\\w-])`, 'i');
+
+      for (let i = 0; i < textNodes.length; i++) {
+        const node  = textNodes[i];
+        const match = node.textContent.match(regex);
+        if (!match) continue;
+
+        const [before, after] = node.textContent.split(regex);
+        const frag = document.createDocumentFragment();
+        frag.appendChild(document.createTextNode(before));
+
+        const a = document.createElement('a');
+        a.href      = target.post.canonicalUrl;
+        a.className = 'inline-backlink';
+        a.title     = target.post.title;
+        a.textContent = match[1];
+        frag.appendChild(a);
+
+        // `after` may contain the matched string in split groups — join the rest
+        const remaining = node.textContent.slice(before.length + match[1].length);
+        frag.appendChild(document.createTextNode(remaining));
+
+        node.parentNode.replaceChild(frag, node);
+        textNodes.splice(i, 1); // this node is gone
+        usedSlugs.add(target.post.slug);
+        linkCount++;
+        break;
+      }
+    }
+  }
+
+  /* ── Related posts + inline links ─────────────────────── */
   async function loadRelated(currentPost) {
     const wrap = document.getElementById('related-wrap');
     if (!wrap) return;
+
     try {
-      const res  = await fetch('/api/feed?page=1');
-      const data = await res.json();
-      if (!data.posts) return;
+      const allPosts = await fetchAllPosts();
+      const others   = allPosts.filter(p => p.slug !== currentPost.slug);
+      if (others.length === 0) return;
 
-      const others = data.posts.filter(p => p.slug !== currentPost.slug);
+      // Inject inline contextual links into article body
+      injectInlineLinks(document.querySelector('.article-body'), others);
 
-      // Prefer posts sharing a label with the current post
+      // Score related posts by shared labels, fall back to recency
       const currentLabels = new Set(currentPost.labels || []);
       const scored = others.map(p => ({
         post:  p,
         score: (p.labels || []).filter(l => currentLabels.has(l)).length,
       }));
-      scored.sort((a, b) => b.score - a.score);
+      scored.sort((a, b) => b.score - a.score || 0);
       const picks = scored.slice(0, 3).map(s => s.post);
-      if (picks.length === 0) return;
 
       wrap.innerHTML = `
         <div class="related-label">Read Next</div>
