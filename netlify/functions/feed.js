@@ -84,9 +84,11 @@ async function fetchWithTimeout(url) {
 exports.handler = async (event) => {
   const qs         = event.queryStringParameters || {};
   const page       = Math.max(1, parseInt(qs.page || '1', 10));
+  const label      = qs.label || '';
   const startIndex = (page - 1) * PER_PAGE + 1;
 
-  const url = `${BLOG_BASE}/feeds/posts/default?alt=json&max-results=${PER_PAGE}&start-index=${startIndex}&orderby=published`;
+  const labelPath  = label ? `/-/${encodeURIComponent(label)}` : '';
+  const url = `${BLOG_BASE}/feeds/posts/default${labelPath}?alt=json&max-results=${PER_PAGE}&start-index=${startIndex}&orderby=published`;
 
   try {
     const res = await fetchWithTimeout(url);

@@ -79,6 +79,18 @@
       line-height: 1;
       margin-top: 3px;
     }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: color 0.18s, background 0.18s;
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
     .nav-cta {
       background: var(--gold);
       color: var(--navy-dark);
@@ -89,6 +101,7 @@
       text-decoration: none;
       transition: background 0.2s;
       white-space: nowrap;
+      margin-left: 8px;
     }
     .nav-cta:hover { background: var(--gold-hover); }
 
@@ -195,6 +208,34 @@
       font-weight: 700;
       color: var(--text-dark);
       margin-bottom: 36px;
+    }
+
+    /* ── Category filter ─────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .filter-btn {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: all 0.18s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .filter-btn:hover { border-color: var(--navy); color: var(--navy); }
+    .filter-btn.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
     }
 
     /* ── Loading ─────────────────────────────────────── */
@@ -421,35 +462,24 @@
     .check-icon { color: var(--gold); }
 
     /* ── Footer ──────────────────────────────────────── */
-    .footer {
-      background: var(--navy-dark);
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 40px 24px;
-    }
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
-      text-align: center;
-    }
-    .footer-links {
-      display: flex;
-      gap: 28px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: rgba(255,255,255,0.38);
-      text-decoration: none;
-      transition: color 0.18s;
-    }
+    .footer { background: var(--navy-dark); border-top: 1px solid rgba(255,255,255,0.07); padding: 56px 24px 32px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .footer-brand-name { font-weight: 700; font-size: 13px; letter-spacing: 0.1em; color: #fff; line-height: 1; }
+    .footer-brand-sub { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); margin-top: 3px; }
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.38); line-height: 1.7; max-width: 260px; }
+    .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.18s; }
     .footer-links a:hover { color: #fff; }
+    .footer-topics { display: flex; flex-direction: column; gap: 10px; }
+    .footer-topic-link { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; cursor: pointer; background: none; border: none; font-family: inherit; text-align: left; padding: 0; transition: color 0.18s; }
+    .footer-topic-link:hover { color: #fff; }
+    .footer-bottom { max-width: 1200px; margin: 28px auto 0; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.22); }
+    .footer-disclaimer { font-size: 11px; color: rgba(255,255,255,0.18); max-width: 520px; line-height: 1.6; }
 
+    @media (max-width: 900px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
     @media (max-width: 600px) {
       .hero { padding: 60px 20px 72px; }
       .hero-stats { gap: 28px; }
@@ -458,6 +488,7 @@
       .cta-checks { gap: 16px; }
       .posts-section { padding: 48px 16px 36px; }
       .cta-wrap { padding: 0 16px 56px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
     }
   </style>
 </head>
@@ -477,7 +508,11 @@
         <span class="logo-sub">HOME PROTECTION</span>
       </div>
     </a>
-    <a href="https://coloradohomeprotection.net" class="nav-cta">Get Free Quote</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Articles</a>
+      <a href="/privacy/" class="nav-link">Privacy</a>
+      <a href="https://coloradohomeprotection.net" class="nav-cta">Get Free Quote</a>
+    </div>
   </div>
 </nav>
 
@@ -508,6 +543,7 @@
 <section class="posts-section" id="posts-section">
   <div class="section-label">Latest Guides</div>
   <div class="section-title">Resources for Colorado Homeowners</div>
+  <div class="filter-bar" id="filter-bar"></div>
   <div class="post-grid" id="feed">
     <div class="loading">
       <div class="loading-spinner"></div>
@@ -535,21 +571,59 @@
 
 <!-- ── Footer ───────────────────────────────────────── -->
 <footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-links">
-      <a href="https://coloradohomeprotection.net">Main Site</a>
-      <a href="https://coloradohomeprotection.net/privacy">Privacy Policy</a>
-      <a href="mailto:Charlesheathpro@gmail.com">Contact</a>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <svg width="30" height="34" viewBox="0 0 120 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 4 L102 4 L116 18 L116 76 Q116 118 60 133 Q4 118 4 76 L4 18 Z" fill="#1a3256"/>
+          <polyline points="16,85 60,44 104,85" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="68" y="30" width="13" height="22" rx="1.5" fill="white"/>
+        </svg>
+        <div>
+          <div class="footer-brand-name">COLORADO</div>
+          <div class="footer-brand-sub">HOME PROTECTION</div>
+        </div>
+      </div>
+      <p class="footer-tagline">Free educational resources for Colorado homeowners on mortgage protection and life insurance.</p>
     </div>
-    <p class="footer-copy">© 2026 Colorado Home Protection · blog.coloradohomeprotection.net</p>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <div class="footer-links">
+        <a href="/">All Articles</a>
+        <a href="https://coloradohomeprotection.net">Main Site</a>
+        <a href="mailto:Charlesheathpro@gmail.com">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Topics</div>
+      <div class="footer-topics" id="footer-topics">
+        <a class="footer-topic-link" href="/?label=Mortgage+Protection">Mortgage Protection</a>
+        <a class="footer-topic-link" href="/?label=Life+Insurance">Life Insurance</a>
+        <a class="footer-topic-link" href="/?label=Colorado">Colorado</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <div class="footer-links">
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="https://coloradohomeprotection.net/terms">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Colorado Home Protection. All rights reserved.</p>
+    <p class="footer-disclaimer">This blog is for educational purposes only and does not constitute financial or insurance advice. Coverage availability and rates vary by individual.</p>
   </div>
 </footer>
 
 <script>
   /* ── State ─────────────────────────────────────────── */
-  const FEED_API   = '/api/feed';
-  const SITE_BASE  = 'https://blog.coloradohomeprotection.net';
-  let   currentPage = Math.max(1, parseInt(new URLSearchParams(window.location.search).get('page') || '1', 10));
+  const FEED_API  = '/api/feed';
+  const SITE_BASE = 'https://blog.coloradohomeprotection.net';
+
+  const qs = new URLSearchParams(window.location.search);
+  let currentPage  = Math.max(1, parseInt(qs.get('page') || '1', 10));
+  let currentLabel = qs.get('label') || '';
 
   /* ── Helpers ───────────────────────────────────────── */
   function formatDate(iso) {
@@ -593,13 +667,21 @@
   function renderPagination(p) {
     if (p.totalPages <= 1) return '';
     return `
-      <button class="pag-btn" id="pag-prev" ${!p.hasPrev ? 'disabled' : ''} onclick="changePage(${p.page - 1})">
-        ← Previous
-      </button>
+      <button class="pag-btn" ${!p.hasPrev ? 'disabled' : ''} onclick="changePage(${p.page - 1})">← Previous</button>
       <span class="pag-info">Page ${p.page} of ${p.totalPages}</span>
-      <button class="pag-btn" id="pag-next" ${!p.hasNext ? 'disabled' : ''} onclick="changePage(${p.page + 1})">
-        Next →
-      </button>`;
+      <button class="pag-btn" ${!p.hasNext ? 'disabled' : ''} onclick="changePage(${p.page + 1})">Next →</button>`;
+  }
+
+  /* ── Render filter bar ─────────────────────────────── */
+  function renderFilterBar(labels) {
+    const filterEl = document.getElementById('filter-bar');
+    if (!filterEl || !labels.length) return;
+
+    const all = `<button class="filter-btn ${!currentLabel ? 'active' : ''}" onclick="setLabel('')">All Topics</button>`;
+    const pills = labels.map(l =>
+      `<button class="filter-btn ${currentLabel === l ? 'active' : ''}" onclick="setLabel('${l.replace(/'/g,"\\'")}')">${l}</button>`
+    ).join('');
+    filterEl.innerHTML = all + pills;
   }
 
   /* ── Cache posts in sessionStorage so post pages load instantly ── */
@@ -610,15 +692,18 @@
   }
 
   /* ── Load a page of posts ──────────────────────────── */
-  async function loadPosts(page) {
+  async function loadPosts(page, label) {
     const feedEl  = document.getElementById('feed');
     const paginEl = document.getElementById('pagination');
 
-    feedEl.innerHTML = `<div class="loading"><div class="loading-spinner"></div><span>Loading articles…</span></div>`;
+    feedEl.innerHTML  = `<div class="loading"><div class="loading-spinner"></div><span>Loading articles…</span></div>`;
     paginEl.innerHTML = '';
 
+    let apiUrl = `${FEED_API}?page=${page}`;
+    if (label) apiUrl += `&label=${encodeURIComponent(label)}`;
+
     try {
-      const res  = await fetch(`${FEED_API}?page=${page}`);
+      const res  = await fetch(apiUrl);
       const data = await res.json();
 
       if (!res.ok || !data.posts) throw new Error(data.error || 'Failed to load');
@@ -628,19 +713,28 @@
         return;
       }
 
-      // Cache all posts on this page for instant post-page loads
       cachePosts(data.posts);
 
-      feedEl.innerHTML   = data.posts.map(renderCard).join('');
-      paginEl.innerHTML  = renderPagination(data.pagination);
+      // Collect unique labels across this page for the filter bar
+      const allLabels = [...new Set(data.posts.flatMap(p => p.labels || []))].sort();
+      renderFilterBar(allLabels);
+
+      feedEl.innerHTML  = data.posts.map(renderCard).join('');
+      paginEl.innerHTML = renderPagination(data.pagination);
 
       // Update URL and canonical
-      const urlPage = page === 1 ? '/' : `/?page=${page}`;
-      history.pushState({ page }, '', urlPage);
-      document.getElementById('canonical').href = `${SITE_BASE}${urlPage}`;
-      document.title = page === 1
-        ? 'Colorado Home Protection | Homeowner Resource Center'
-        : `Page ${page} | Colorado Home Protection`;
+      const params = new URLSearchParams();
+      if (page > 1)  params.set('page', page);
+      if (label)     params.set('label', label);
+      const search  = params.toString() ? '?' + params.toString() : '';
+      const urlPath = '/' + search;
+      history.pushState({ page, label }, '', urlPath);
+      document.getElementById('canonical').href = `${SITE_BASE}${urlPath}`;
+      document.title = label
+        ? `${label} | Colorado Home Protection`
+        : page === 1
+          ? 'Colorado Home Protection | Homeowner Resource Center'
+          : `Page ${page} | Colorado Home Protection`;
 
     } catch (err) {
       feedEl.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">Unable to load articles. Please try again later.</p>';
@@ -650,20 +744,27 @@
   /* ── Page change ───────────────────────────────────── */
   function changePage(page) {
     currentPage = page;
-    loadPosts(page);
-    // Scroll to top of posts section
+    loadPosts(page, currentLabel);
+    document.getElementById('posts-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ── Label filter change ───────────────────────────── */
+  function setLabel(label) {
+    currentLabel = label;
+    currentPage  = 1;
+    loadPosts(1, label);
     document.getElementById('posts-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   /* ── Browser back/forward support ─────────────────── */
   window.addEventListener('popstate', (e) => {
-    const page = e.state?.page || 1;
-    currentPage = page;
-    loadPosts(page);
+    currentPage  = e.state?.page  || 1;
+    currentLabel = e.state?.label || '';
+    loadPosts(currentPage, currentLabel);
   });
 
   /* ── Boot ──────────────────────────────────────────── */
-  loadPosts(currentPage);
+  loadPosts(currentPage, currentLabel);
 </script>
 </body>
 </html>

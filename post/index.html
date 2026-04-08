@@ -78,6 +78,18 @@
       line-height: 1;
       margin-top: 3px;
     }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: color 0.18s, background 0.18s;
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
     .nav-cta {
       background: var(--gold);
       color: var(--navy-dark);
@@ -88,6 +100,7 @@
       text-decoration: none;
       transition: background 0.2s;
       white-space: nowrap;
+      margin-left: 8px;
     }
     .nav-cta:hover { background: var(--gold-hover); }
 
@@ -469,34 +482,19 @@
     .check-icon { color: var(--gold); }
 
     /* ── Footer ──────────────────────────────────────── */
-    .footer {
-      background: var(--navy-dark);
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 40px 24px;
-    }
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
-      text-align: center;
-    }
-    .footer-links {
-      display: flex;
-      gap: 28px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: rgba(255,255,255,0.38);
-      text-decoration: none;
-      transition: color 0.18s;
-    }
+    .footer { background: var(--navy-dark); border-top: 1px solid rgba(255,255,255,0.07); padding: 56px 24px 32px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .footer-brand-name { font-weight: 700; font-size: 13px; letter-spacing: 0.1em; color: #fff; line-height: 1; }
+    .footer-brand-sub { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); margin-top: 3px; }
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.38); line-height: 1.7; max-width: 260px; }
+    .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.18s; }
     .footer-links a:hover { color: #fff; }
+    .footer-bottom { max-width: 1200px; margin: 28px auto 0; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.22); }
+    .footer-disclaimer { font-size: 11px; color: rgba(255,255,255,0.18); max-width: 520px; line-height: 1.6; }
 
     /* ── Loading / error ─────────────────────────────── */
     .state-center {
@@ -522,6 +520,7 @@
       .post-header { padding: 44px 24px 60px; }
       .logo-text { display: none; }
       .cta-wrap { padding: 0 16px 56px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
     }
   </style>
 </head>
@@ -541,7 +540,11 @@
         <span class="logo-sub">HOME PROTECTION</span>
       </div>
     </a>
-    <a href="https://coloradohomeprotection.net" class="nav-cta">Get Free Quote</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Articles</a>
+      <a href="/privacy/" class="nav-link">Privacy</a>
+      <a href="https://coloradohomeprotection.net" class="nav-cta">Get Free Quote</a>
+    </div>
   </div>
 </nav>
 
@@ -571,13 +574,40 @@
 
 <!-- ── Footer (shown after load) ──────────────────── -->
 <footer class="footer" id="footer-section" style="display:none">
-  <div class="footer-inner">
-    <div class="footer-links">
-      <a href="https://coloradohomeprotection.net">Main Site</a>
-      <a href="https://coloradohomeprotection.net/privacy">Privacy Policy</a>
-      <a href="mailto:Charlesheathpro@gmail.com">Contact</a>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <svg width="30" height="34" viewBox="0 0 120 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 4 L102 4 L116 18 L116 76 Q116 118 60 133 Q4 118 4 76 L4 18 Z" fill="#1a3256"/>
+          <polyline points="16,85 60,44 104,85" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="68" y="30" width="13" height="22" rx="1.5" fill="white"/>
+        </svg>
+        <div>
+          <div class="footer-brand-name">COLORADO</div>
+          <div class="footer-brand-sub">HOME PROTECTION</div>
+        </div>
+      </div>
+      <p class="footer-tagline">Free educational resources for Colorado homeowners on mortgage protection and life insurance.</p>
     </div>
-    <p class="footer-copy">© 2026 Colorado Home Protection · blog.coloradohomeprotection.net</p>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <div class="footer-links">
+        <a href="/">All Articles</a>
+        <a href="https://coloradohomeprotection.net">Main Site</a>
+        <a href="mailto:Charlesheathpro@gmail.com">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <div class="footer-links">
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="https://coloradohomeprotection.net/terms">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Colorado Home Protection. All rights reserved.</p>
+    <p class="footer-disclaimer">This blog is for educational purposes only and does not constitute financial or insurance advice. Coverage availability and rates vary by individual.</p>
   </div>
 </footer>
 

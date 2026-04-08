@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | Colorado Home Protection Blog</title>
+  <meta name="description" content="Privacy Policy for the Colorado Home Protection resource blog. Learn how we handle visitor data and protect your privacy.">
+  <link rel="canonical" href="https://blog.coloradohomeprotection.net/privacy/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1a3256; --navy-dark: #0f1e38; --navy-mid: #1e3a5f;
+      --gold: #c49a2e; --gold-hover: #d4aa3e;
+      --text-dark: #1e293b; --text-mid: #475569; --text-light: #94a3b8;
+      --bg: #f8fafc; --bg-card: #ffffff; --border: #e2e8f0;
+    }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text-dark); line-height: 1.6; }
+
+    /* ── Nav ── */
+    .nav { background: var(--navy-dark); border-bottom: 1px solid rgba(255,255,255,0.07); position: sticky; top: 0; z-index: 100; }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-brand { font-weight: 700; font-size: 13px; letter-spacing: 0.12em; color: #fff; line-height: 1; }
+    .logo-sub { font-size: 10px; letter-spacing: 0.15em; color: var(--gold); line-height: 1; margin-top: 3px; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-link { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.65); text-decoration: none; padding: 6px 12px; border-radius: 6px; transition: color 0.18s, background 0.18s; }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-cta { background: var(--gold); color: var(--navy-dark); font-weight: 700; font-size: 13px; padding: 9px 20px; border-radius: 8px; text-decoration: none; transition: background 0.2s; white-space: nowrap; }
+    .nav-cta:hover { background: var(--gold-hover); }
+
+    /* ── Page header ── */
+    .page-header { background: linear-gradient(140deg, var(--navy-dark) 0%, var(--navy-mid) 100%); padding: 56px 24px 64px; }
+    .page-header-inner { max-width: 760px; margin: 0 auto; }
+    .page-header-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); background: rgba(196,154,46,0.12); border: 1px solid rgba(196,154,46,0.25); padding: 4px 12px; border-radius: 100px; margin-bottom: 18px; }
+    .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 40px); font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 12px; }
+    .page-header p { font-size: 15px; color: rgba(255,255,255,0.55); }
+
+    /* ── Content ── */
+    .content-wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+    .policy-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 48px 52px; font-size: 16px; line-height: 1.8; color: var(--text-dark); }
+    .policy-card h2 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--navy-dark); margin: 2.2em 0 0.7em; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .policy-card h2:first-child { margin-top: 0; }
+    .policy-card p { margin-bottom: 1.2em; color: var(--text-mid); }
+    .policy-card p:last-child { margin-bottom: 0; }
+    .policy-card ul { margin: 0 0 1.2em 1.5em; }
+    .policy-card li { margin-bottom: 0.4em; color: var(--text-mid); }
+    .policy-card a { color: var(--navy); text-decoration: underline; text-decoration-color: rgba(30,58,95,0.3); }
+    .policy-card a:hover { color: var(--gold); }
+    .policy-card strong { color: var(--text-dark); }
+    .last-updated { font-size: 13px; color: var(--text-light); margin-bottom: 32px; }
+
+    /* ── Footer ── */
+    .footer { background: var(--navy-dark); border-top: 1px solid rgba(255,255,255,0.07); padding: 56px 24px 32px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .footer-brand-name { font-weight: 700; font-size: 13px; letter-spacing: 0.1em; color: #fff; }
+    .footer-brand-sub { font-size: 10px; letter-spacing: 0.14em; color: var(--gold); margin-top: 2px; }
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 260px; }
+    .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.18s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-bottom { max-width: 1200px; margin: 28px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.22); }
+    .footer-disclaimer { font-size: 11px; color: rgba(255,255,255,0.18); max-width: 560px; line-height: 1.6; }
+    @media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; gap: 32px; } .policy-card { padding: 28px 22px; } .logo-text { display: none; } }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="Colorado Home Protection Blog">
+      <svg width="36" height="41" viewBox="0 0 120 136" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18 4 L102 4 L116 18 L116 76 Q116 118 60 133 Q4 118 4 76 L4 18 Z" fill="#1a3256"/>
+        <polyline points="16,85 60,44 104,85" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <rect x="68" y="30" width="13" height="22" rx="1.5" fill="white"/>
+      </svg>
+      <div class="logo-text">
+        <span class="logo-brand">COLORADO</span>
+        <span class="logo-sub">HOME PROTECTION</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Articles</a>
+      <a href="https://coloradohomeprotection.net" class="nav-cta">Get Free Quote</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-badge">Legal</div>
+    <h1>Privacy Policy</h1>
+    <p>Last updated: April 8, 2026</p>
+  </div>
+</div>
+
+<div class="content-wrap">
+  <div class="policy-card">
+
+    <h2>Overview</h2>
+    <p>This Privacy Policy describes how Colorado Home Protection ("we," "us," or "our") collects, uses, and protects information when you visit <strong>blog.coloradohomeprotection.net</strong> (the "Blog"). We take your privacy seriously and are committed to being transparent about our practices.</p>
+
+    <h2>Information We Collect</h2>
+    <p>The Blog is a read-only resource. We do not require you to create an account or submit personal information to access any content.</p>
+    <ul>
+      <li><strong>Server logs:</strong> Our hosting provider (Netlify) automatically records standard server log data, including IP addresses, browser type, referring URLs, and pages visited. This data is used solely for operational and security purposes and is governed by <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener">Netlify's Privacy Policy</a>.</li>
+      <li><strong>Contact by email:</strong> If you email us directly, we receive your email address and the contents of your message. We use this only to respond to your inquiry.</li>
+    </ul>
+
+    <h2>Third-Party Services</h2>
+    <p>The Blog uses the following third-party services, each with their own privacy practices:</p>
+    <ul>
+      <li><strong>Netlify</strong> — Website hosting and serverless functions. <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener">Netlify Privacy Policy →</a></li>
+      <li><strong>Google Blogger</strong> — Content management system. Blog posts are authored and stored on Google's Blogger platform. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy →</a></li>
+      <li><strong>Google Fonts</strong> — Typography. Google Fonts may log requests made by your browser. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy →</a></li>
+    </ul>
+
+    <h2>Cookies</h2>
+    <p>The Blog does not use advertising cookies, tracking pixels, or analytics cookies. Netlify may set technically necessary cookies for site operation and performance. We do not sell, share, or use your browsing data for advertising purposes.</p>
+
+    <h2>Links to Other Websites</h2>
+    <p>The Blog contains links to our main website (<a href="https://coloradohomeprotection.net">coloradohomeprotection.net</a>) and occasionally to external sources. We are not responsible for the privacy practices of any third-party websites. We encourage you to review the privacy policies of any site you visit.</p>
+
+    <h2>Children's Privacy</h2>
+    <p>The Blog is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us and we will promptly delete it.</p>
+
+    <h2>Data Security</h2>
+    <p>We take reasonable precautions to protect information transmitted to or from the Blog. All traffic is encrypted via HTTPS. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
+
+    <h2>Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top of this page. We encourage you to review this page periodically. Continued use of the Blog after any changes constitutes your acceptance of the updated policy.</p>
+
+    <h2>Contact Us</h2>
+    <p>If you have any questions or concerns about this Privacy Policy, please contact us:</p>
+    <ul>
+      <li><strong>Email:</strong> <a href="mailto:Charlesheathpro@gmail.com">Charlesheathpro@gmail.com</a></li>
+      <li><strong>Website:</strong> <a href="https://coloradohomeprotection.net">coloradohomeprotection.net</a></li>
+    </ul>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <svg width="30" height="34" viewBox="0 0 120 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 4 L102 4 L116 18 L116 76 Q116 118 60 133 Q4 118 4 76 L4 18 Z" fill="#1a3256"/>
+          <polyline points="16,85 60,44 104,85" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="68" y="30" width="13" height="22" rx="1.5" fill="white"/>
+        </svg>
+        <div>
+          <div class="footer-brand-name">COLORADO</div>
+          <div class="footer-brand-sub">HOME PROTECTION</div>
+        </div>
+      </div>
+      <p class="footer-tagline">Free educational resources for Colorado homeowners on mortgage protection and life insurance.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <div class="footer-links">
+        <a href="/">All Articles</a>
+        <a href="https://coloradohomeprotection.net">Main Site</a>
+        <a href="mailto:Charlesheathpro@gmail.com">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <div class="footer-links">
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="https://coloradohomeprotection.net/terms">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Colorado Home Protection. All rights reserved.</p>
+    <p class="footer-disclaimer">This blog is for educational purposes only and does not constitute financial or insurance advice. Coverage availability and rates vary by individual.</p>
+  </div>
+</footer>
+
+</body>
+</html>
