@@ -25,6 +25,15 @@ function toExcerpt(html, max = 220) {
   return text.length > max ? text.slice(0, max).trimEnd() + '…' : text;
 }
 
+function rewriteLinks(html) {
+  if (!html) return html;
+  // Replace blogspot post links with canonical custom-domain URLs
+  return html.replace(
+    /https?:\/\/cohomeprotection\.blogspot\.com\/(\d{4}\/\d{2}\/)([^"'\s<>]+?)\.html/gi,
+    (_, _path, slug) => `${SITE_BASE}/post/?slug=${slug.split('/').pop()}`
+  );
+}
+
 function bestImage(entry, content) {
   // media:thumbnail is Blogger's pre-extracted image — upgrade to larger size
   const thumb = entry['media$thumbnail'];
@@ -37,7 +46,7 @@ function bestImage(entry, content) {
 function normalize(entry) {
   const bloggerUrl = getAlternateUrl(entry);
   const slug       = extractSlug(bloggerUrl);
-  const content    = entry.content?.['$t'] || entry.summary?.['$t'] || '';
+  const content    = rewriteLinks(entry.content?.['$t'] || entry.summary?.['$t'] || '');
   const title      = entry.title?.['$t'] || 'Untitled';
   const published  = entry.published?.['$t'] || null;
   const updated    = entry.updated?.['$t'] || null;
