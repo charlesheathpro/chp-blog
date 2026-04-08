@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Colorado Home Protection | Homeowner Resource Center</title>
-  <meta name="description" content="Educational guides for Colorado homeowners on mortgage protection and life insurance. Learn how to keep your family's home safe no matter what happens.">
+  <meta name="description" content="Guides and resources for Colorado homeowners on mortgage protection and life insurance. Keep your family's home secure no matter what.">
   <meta property="og:title" content="Colorado Home Protection | Homeowner Resource Center">
-  <meta property="og:description" content="Guides to help Colorado homeowners understand mortgage protection and life insurance options.">
-  <meta property="og:url" content="https://blog.coloradohomeprotection.net">
+  <meta property="og:description" content="Guides and resources for Colorado homeowners on mortgage protection and life insurance.">
+  <meta property="og:url" content="https://blog.coloradohomeprotection.net/">
   <meta property="og:type" content="website">
+  <link rel="canonical" id="canonical" href="https://blog.coloradohomeprotection.net/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -36,7 +38,7 @@
       line-height: 1.6;
     }
 
-    /* ── Navigation ────────────────────────────────────── */
+    /* ── Navigation ──────────────────────────────────── */
     .nav {
       background: var(--navy-dark);
       border-bottom: 1px solid rgba(255,255,255,0.07);
@@ -87,11 +89,10 @@
       text-decoration: none;
       transition: background 0.2s;
       white-space: nowrap;
-      letter-spacing: 0.01em;
     }
     .nav-cta:hover { background: var(--gold-hover); }
 
-    /* ── Hero ──────────────────────────────────────────── */
+    /* ── Hero ────────────────────────────────────────── */
     .hero {
       background: linear-gradient(140deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
       padding: 80px 24px 88px;
@@ -148,10 +149,7 @@
       line-height: 1.18;
       margin-bottom: 20px;
     }
-    .hero h1 em {
-      font-style: italic;
-      color: var(--gold);
-    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
     .hero p {
       font-size: 17px;
       color: rgba(255,255,255,0.68);
@@ -177,7 +175,7 @@
       margin-top: 3px;
     }
 
-    /* ── Posts Section ─────────────────────────────────── */
+    /* ── Posts section ───────────────────────────────── */
     .posts-section {
       max-width: 1200px;
       margin: 0 auto;
@@ -199,7 +197,7 @@
       margin-bottom: 36px;
     }
 
-    /* ── Loading ───────────────────────────────────────── */
+    /* ── Loading ─────────────────────────────────────── */
     .loading {
       display: flex;
       flex-direction: column;
@@ -220,16 +218,16 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── Post Grid ─────────────────────────────────────── */
+    /* ── Post grid ───────────────────────────────────── */
     .post-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 28px;
     }
-    @media (max-width: 960px)  { .post-grid { grid-template-columns: repeat(2,1fr); } }
-    @media (max-width: 600px)  { .post-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 960px) { .post-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .post-grid { grid-template-columns: 1fr; } }
 
-    /* ── Post Card ─────────────────────────────────────── */
+    /* ── Post card ───────────────────────────────────── */
     .post-card {
       background: var(--bg-card);
       border-radius: 14px;
@@ -237,10 +235,10 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      cursor: pointer;
-      transition: box-shadow 0.22s ease, transform 0.22s ease;
       text-decoration: none;
       color: inherit;
+      transition: box-shadow 0.22s, transform 0.22s;
+      will-change: transform;
     }
     .post-card:hover {
       box-shadow: 0 16px 48px rgba(0,0,0,0.10);
@@ -248,13 +246,13 @@
     }
     .post-thumb {
       width: 100%;
-      height: 196px;
+      height: 200px;
       object-fit: cover;
       display: block;
     }
     .post-thumb-placeholder {
       width: 100%;
-      height: 196px;
+      height: 200px;
       background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
       display: flex;
       align-items: center;
@@ -284,10 +282,7 @@
       padding: 3px 10px;
       border-radius: 100px;
     }
-    .post-date {
-      font-size: 12px;
-      color: var(--text-light);
-    }
+    .post-date { font-size: 12px; color: var(--text-light); }
     .post-title {
       font-family: 'Playfair Display', serif;
       font-size: 19px;
@@ -313,10 +308,50 @@
       transition: color 0.18s;
     }
     .post-card:hover .post-read-more { color: var(--gold); }
+    .arrow-icon { display: inline-block; transition: transform 0.18s; }
     .post-card:hover .arrow-icon { transform: translateX(3px); }
-    .arrow-icon { transition: transform 0.18s; display: inline-block; }
 
-    /* ── CTA Banner ────────────────────────────────────── */
+    /* ── Pagination ──────────────────────────────────── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+    .pag-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: border-color 0.18s, color 0.18s, background 0.18s;
+      font-family: inherit;
+    }
+    .pag-btn:hover:not(:disabled) {
+      border-color: var(--navy);
+      background: var(--navy);
+      color: #fff;
+    }
+    .pag-btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+    .pag-info {
+      font-size: 13px;
+      color: var(--text-light);
+      min-width: 100px;
+      text-align: center;
+    }
+
+    /* ── CTA Banner ──────────────────────────────────── */
     .cta-wrap {
       max-width: 1200px;
       margin: 0 auto;
@@ -337,15 +372,6 @@
       width: 300px; height: 300px;
       border-radius: 50%;
       background: rgba(196,154,46,0.07);
-      pointer-events: none;
-    }
-    .cta-banner::after {
-      content: '';
-      position: absolute;
-      bottom: -90px; left: -50px;
-      width: 240px; height: 240px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.025);
       pointer-events: none;
     }
     .cta-inner { position: relative; z-index: 1; }
@@ -376,7 +402,6 @@
       border-radius: 10px;
       text-decoration: none;
       transition: background 0.2s, transform 0.15s;
-      letter-spacing: 0.01em;
     }
     .btn-gold:hover { background: var(--gold-hover); transform: translateY(-1px); }
     .cta-checks {
@@ -395,7 +420,7 @@
     }
     .check-icon { color: var(--gold); }
 
-    /* ── Footer ────────────────────────────────────────── */
+    /* ── Footer ──────────────────────────────────────── */
     .footer {
       background: var(--navy-dark);
       border-top: 1px solid rgba(255,255,255,0.07);
@@ -423,32 +448,29 @@
       transition: color 0.18s;
     }
     .footer-links a:hover { color: #fff; }
-    .footer-copy {
-      font-size: 12px;
-      color: rgba(255,255,255,0.22);
-    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.22); }
 
-    /* ── Responsive ────────────────────────────────────── */
     @media (max-width: 600px) {
       .hero { padding: 60px 20px 72px; }
       .hero-stats { gap: 28px; }
       .logo-text { display: none; }
       .cta-banner { padding: 44px 24px; }
       .cta-checks { gap: 16px; }
+      .posts-section { padding: 48px 16px 36px; }
+      .cta-wrap { padding: 0 16px 56px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── Navigation ─────────────────────────────────────── -->
+<!-- ── Navigation ──────────────────────────────────── -->
 <nav class="nav">
   <div class="nav-inner">
     <a href="/" class="logo" aria-label="Colorado Home Protection Blog">
-      <svg width="38" height="45" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22 2L42 10V28C42 41 22 51 22 51C22 51 2 41 2 28V10L22 2Z" fill="#1a3256" stroke="#c49a2e" stroke-width="1.5"/>
-        <path d="M11 30L22 18L33 30" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <rect x="17" y="30" width="10" height="10" rx="1" fill="white"/>
-        <rect x="20.5" y="34" width="3" height="6" rx="0.5" fill="#1a3256"/>
+      <svg width="36" height="41" viewBox="0 0 120 136" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18 4 L102 4 L116 18 L116 76 Q116 118 60 133 Q4 118 4 76 L4 18 Z" fill="#1a3256"/>
+        <polyline points="16,85 60,44 104,85" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <rect x="68" y="30" width="13" height="22" rx="1.5" fill="white"/>
       </svg>
       <div class="logo-text">
         <span class="logo-brand">COLORADO</span>
@@ -459,12 +481,10 @@
   </div>
 </nav>
 
-<!-- ── Hero ───────────────────────────────────────────── -->
+<!-- ── Hero ────────────────────────────────────────── -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">
-      <span>Colorado Homeowner Resources</span>
-    </div>
+    <div class="hero-badge"><span>Colorado Homeowner Resources</span></div>
     <h1>Protect What <em>Matters Most</em><br>to Your Family</h1>
     <p>Straightforward guides to help Colorado homeowners understand mortgage protection and life insurance — no jargon, no pressure.</p>
     <div class="hero-stats">
@@ -484,8 +504,8 @@
   </div>
 </section>
 
-<!-- ── Posts ──────────────────────────────────────────── -->
-<section class="posts-section">
+<!-- ── Posts ────────────────────────────────────────── -->
+<section class="posts-section" id="posts-section">
   <div class="section-label">Latest Guides</div>
   <div class="section-title">Resources for Colorado Homeowners</div>
   <div class="post-grid" id="feed">
@@ -494,34 +514,26 @@
       <span>Loading articles…</span>
     </div>
   </div>
+  <div class="pagination" id="pagination"></div>
 </section>
 
-<!-- ── CTA ────────────────────────────────────────────── -->
+<!-- ── CTA ──────────────────────────────────────────── -->
 <div class="cta-wrap">
   <div class="cta-banner">
     <div class="cta-inner">
       <h2>Ready to Protect Your Mortgage?</h2>
       <p>A local Colorado agent will review your situation and show you exactly what coverage options are available — in about 10 minutes.</p>
-      <a href="https://coloradohomeprotection.net" class="btn-gold">
-        See What I Qualify For
-        <span class="arrow-icon">→</span>
-      </a>
+      <a href="https://coloradohomeprotection.net" class="btn-gold">See What I Qualify For →</a>
       <div class="cta-checks">
-        <div class="cta-check">
-          <span class="check-icon">✓</span> Takes 30 seconds
-        </div>
-        <div class="cta-check">
-          <span class="check-icon">✓</span> No obligation
-        </div>
-        <div class="cta-check">
-          <span class="check-icon">✓</span> Local Colorado broker
-        </div>
+        <div class="cta-check"><span class="check-icon">✓</span> Takes 30 seconds</div>
+        <div class="cta-check"><span class="check-icon">✓</span> No obligation</div>
+        <div class="cta-check"><span class="check-icon">✓</span> Local Colorado broker</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── Footer ─────────────────────────────────────────── -->
+<!-- ── Footer ───────────────────────────────────────── -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-links">
@@ -534,90 +546,124 @@
 </footer>
 
 <script>
-  /* ── Config ──────────────────────────────────────────── */
-  const RSS_URL = 'https://cohomeprotection.blogspot.com/feeds/posts/default';
-  const API_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&count=10`;
+  /* ── State ─────────────────────────────────────────── */
+  const FEED_API   = '/api/feed';
+  const SITE_BASE  = 'https://blog.coloradohomeprotection.net';
+  let   currentPage = Math.max(1, parseInt(new URLSearchParams(window.location.search).get('page') || '1', 10));
 
-  /* ── Helpers ─────────────────────────────────────────── */
-  function stripHtml(html) {
-    const d = document.createElement('div');
-    d.innerHTML = html;
-    return d.textContent || d.innerText || '';
+  /* ── Helpers ───────────────────────────────────────── */
+  function formatDate(iso) {
+    if (!iso) return '';
+    return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
-  function excerpt(html, maxLen) {
-    const text = stripHtml(html).trim().replace(/\s+/g, ' ');
-    return text.length > maxLen ? text.slice(0, maxLen).trimEnd() + '…' : text;
+  function placeholderSvg() {
+    return `<div class="post-thumb-placeholder">
+      <svg width="40" height="46" viewBox="0 0 120 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 4 L102 4 L116 18 L116 76 Q116 118 60 133 Q4 118 4 76 L4 18 Z" fill="rgba(255,255,255,0.1)" stroke="rgba(196,154,46,0.35)" stroke-width="2"/>
+        <polyline points="16,85 60,44 104,85" stroke="rgba(255,255,255,0.45)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <rect x="68" y="30" width="13" height="22" rx="1.5" fill="rgba(255,255,255,0.4)"/>
+      </svg>
+    </div>`;
   }
 
-  function formatDate(dateStr) {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      year: 'numeric', month: 'long', day: 'numeric'
-    });
-  }
-
-  function slugFromUrl(url) {
-    const parts = url.split('/');
-    return parts[parts.length - 1].replace('.html', '');
-  }
-
-  function postHref(post) {
-    const slug = slugFromUrl(post.link);
-    // Store post data so the post page doesn't need a second fetch when navigating from here
-    try { sessionStorage.setItem('chp_post_' + slug, JSON.stringify(post)); } catch {}
-    return `/post/?slug=${encodeURIComponent(slug)}`;
-  }
-
-  /* ── Render card ─────────────────────────────────────── */
+  /* ── Render card ───────────────────────────────────── */
   function renderCard(post) {
-    const href = postHref(post);
-    const hasThumbnail = post.thumbnail && post.thumbnail.length > 10;
-    const thumb = hasThumbnail
-      ? `<img class="post-thumb" src="${post.thumbnail}" alt="${post.title.replace(/"/g, '&quot;')}" loading="lazy">`
-      : `<div class="post-thumb-placeholder">
-           <svg width="40" height="48" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-             <path d="M22 2L42 10V28C42 41 22 51 22 51C22 51 2 41 2 28V10L22 2Z" fill="rgba(255,255,255,0.12)" stroke="rgba(196,154,46,0.4)" stroke-width="1.5"/>
-             <path d="M11 30L22 18L33 30" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-             <rect x="17" y="30" width="10" height="10" rx="1" fill="rgba(255,255,255,0.4)"/>
-           </svg>
-         </div>`;
-
-    const cat = (post.categories && post.categories.length > 0)
-      ? post.categories[0]
-      : 'Resource Guide';
+    const cat   = post.labels?.[0] || 'Resource Guide';
+    const thumb = post.image
+      ? `<img class="post-thumb" src="${post.image}" alt="${post.title.replace(/"/g,'&quot;')}" loading="lazy">`
+      : placeholderSvg();
 
     return `
-      <a href="${href}" class="post-card">
+      <a href="${post.canonicalUrl}" class="post-card" data-slug="${post.slug}">
         ${thumb}
         <div class="post-card-body">
           <div class="post-meta">
             <span class="post-cat">${cat}</span>
-            <span class="post-date">${formatDate(post.pubDate)}</span>
+            <span class="post-date">${formatDate(post.published)}</span>
           </div>
           <div class="post-title">${post.title}</div>
-          <p class="post-excerpt">${excerpt(post.description || post.content, 145)}</p>
-          <span class="post-read-more">
-            Read Article <span class="arrow-icon">→</span>
-          </span>
+          <p class="post-excerpt">${post.excerpt}</p>
+          <span class="post-read-more">Read Article <span class="arrow-icon">→</span></span>
         </div>
       </a>`;
   }
 
-  /* ── Fetch & render ──────────────────────────────────── */
-  fetch(API_URL)
-    .then(r => r.json())
-    .then(data => {
-      const feed = document.getElementById('feed');
-      if (!data.items || data.items.length === 0) {
-        feed.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">No articles found yet. Check back soon.</p>';
+  /* ── Render pagination ─────────────────────────────── */
+  function renderPagination(p) {
+    if (p.totalPages <= 1) return '';
+    return `
+      <button class="pag-btn" id="pag-prev" ${!p.hasPrev ? 'disabled' : ''} onclick="changePage(${p.page - 1})">
+        ← Previous
+      </button>
+      <span class="pag-info">Page ${p.page} of ${p.totalPages}</span>
+      <button class="pag-btn" id="pag-next" ${!p.hasNext ? 'disabled' : ''} onclick="changePage(${p.page + 1})">
+        Next →
+      </button>`;
+  }
+
+  /* ── Cache posts in sessionStorage so post pages load instantly ── */
+  function cachePosts(posts) {
+    posts.forEach(post => {
+      try { sessionStorage.setItem(`chp_v2_post_${post.slug}`, JSON.stringify(post)); } catch {}
+    });
+  }
+
+  /* ── Load a page of posts ──────────────────────────── */
+  async function loadPosts(page) {
+    const feedEl  = document.getElementById('feed');
+    const paginEl = document.getElementById('pagination');
+
+    feedEl.innerHTML = `<div class="loading"><div class="loading-spinner"></div><span>Loading articles…</span></div>`;
+    paginEl.innerHTML = '';
+
+    try {
+      const res  = await fetch(`${FEED_API}?page=${page}`);
+      const data = await res.json();
+
+      if (!res.ok || !data.posts) throw new Error(data.error || 'Failed to load');
+
+      if (data.posts.length === 0) {
+        feedEl.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">No articles found yet. Check back soon.</p>';
         return;
       }
-      feed.innerHTML = data.items.map(renderCard).join('');
-    })
-    .catch(() => {
-      document.getElementById('feed').innerHTML =
-        '<p style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">Unable to load articles. Please try again later.</p>';
-    });
+
+      // Cache all posts on this page for instant post-page loads
+      cachePosts(data.posts);
+
+      feedEl.innerHTML   = data.posts.map(renderCard).join('');
+      paginEl.innerHTML  = renderPagination(data.pagination);
+
+      // Update URL and canonical
+      const urlPage = page === 1 ? '/' : `/?page=${page}`;
+      history.pushState({ page }, '', urlPage);
+      document.getElementById('canonical').href = `${SITE_BASE}${urlPage}`;
+      document.title = page === 1
+        ? 'Colorado Home Protection | Homeowner Resource Center'
+        : `Page ${page} | Colorado Home Protection`;
+
+    } catch (err) {
+      feedEl.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">Unable to load articles. Please try again later.</p>';
+    }
+  }
+
+  /* ── Page change ───────────────────────────────────── */
+  function changePage(page) {
+    currentPage = page;
+    loadPosts(page);
+    // Scroll to top of posts section
+    document.getElementById('posts-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ── Browser back/forward support ─────────────────── */
+  window.addEventListener('popstate', (e) => {
+    const page = e.state?.page || 1;
+    currentPage = page;
+    loadPosts(page);
+  });
+
+  /* ── Boot ──────────────────────────────────────────── */
+  loadPosts(currentPage);
 </script>
 </body>
 </html>

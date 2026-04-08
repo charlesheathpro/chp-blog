@@ -1,0 +1,8 @@
+<svg viewBox="0 0 120 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shield body: flat top, chamfered top corners, angled sides, rounded bottom point -->
+  <path d="M18 4 L102 4 L116 18 L116 76 Q116 118 60 133 Q4 118 4 76 L4 18 Z" fill="#1a3256"/>
+  <!-- Roof chevron: two lines meeting at peak -->
+  <polyline points="16,85 60,44 104,85" stroke="white" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Chimney: small rect rising from the right slope near the peak -->
+  <rect x="68" y="30" width="13" height="22" rx="1.5" fill="white"/>
+</svg>
