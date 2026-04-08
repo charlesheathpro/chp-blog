@@ -117,9 +117,17 @@ async function generateImage(post) {
   return Buffer.from(b64, 'base64');
 }
 
+function getImageStore() {
+  return getStore({
+    name:   'post-images',
+    siteID: process.env.NETLIFY_SITE_ID || process.env.SITE_ID,
+    token:  process.env.NETLIFY_AUTH_TOKEN,
+  });
+}
+
 /* ── Handler (runs on schedule) ─────────────────────── */
 exports.handler = async () => {
-  const store = getStore('post-images');
+  const store = getImageStore();
 
   // Load manifest of already-generated slugs
   let manifest = {};

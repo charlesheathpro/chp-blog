@@ -8,7 +8,11 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'Missing slug' };
   }
 
-  const store = getStore('post-images');
+  const store = getStore({
+    name:   'post-images',
+    siteID: process.env.NETLIFY_SITE_ID || process.env.SITE_ID,
+    token:  process.env.NETLIFY_AUTH_TOKEN,
+  });
 
   try {
     const result = await store.getWithMetadata(slug, { type: 'arrayBuffer' });
