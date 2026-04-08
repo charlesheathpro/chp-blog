@@ -635,7 +635,17 @@
   /* ── Config ─────────────────────────────────────────── */
   const POST_API  = '/api/post';
   const SITE_BASE = 'https://blog.coloradohomeprotection.net';
-  const slug      = new URLSearchParams(window.location.search).get('slug');
+
+  // Extract slug from clean URL (/post/slug/) or legacy query string (/post/?slug=X)
+  const _parts = window.location.pathname.split('/').filter(Boolean);
+  const slug   = _parts.length >= 2
+    ? decodeURIComponent(_parts[1])
+    : (new URLSearchParams(window.location.search).get('slug') || '');
+
+  // Redirect legacy ?slug= URLs to clean path permanently
+  if (_parts.length < 2 && slug) {
+    window.location.replace(`/post/${encodeURIComponent(slug)}/`);
+  }
 
   /* ── Helpers ─────────────────────────────────────────── */
   function formatDate(iso) {
@@ -742,6 +752,8 @@
 
   /* ── Render ──────────────────────────────────────────── */
   function renderPost(post) {
+    // Always use clean URL regardless of cache age
+    post.canonicalUrl = `${SITE_BASE}/post/${encodeURIComponent(post.slug)}/`;
     setMeta(post);
     injectJsonLd(post);
 

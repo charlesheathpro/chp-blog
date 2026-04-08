@@ -59,7 +59,7 @@ function normalize(entry) {
     content,
     image: bestImage(entry, content, slug),
     labels,
-    canonicalUrl: `${SITE_BASE}/post/?slug=${encodeURIComponent(slug)}`,
+    canonicalUrl: `${SITE_BASE}/post/${encodeURIComponent(slug)}/`,
     bloggerUrl,
   };
 }

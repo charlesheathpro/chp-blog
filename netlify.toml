@@ -36,7 +36,15 @@
   status = 200
   force  = true
 
-# ── Post pages (query-string routing, serves post/index.html) ──
+# ── Legacy ?slug= URLs → clean path (301 permanent) ─────
+[[redirects]]
+  from   = "/post/"
+  to     = "/post/:slug/"
+  status = 301
+  query  = {slug = ":slug"}
+  force  = true
+
+# ── Clean post URLs → post/index.html ────────────────────
 [[redirects]]
   from   = "/post/*"
   to     = "/post/index.html"
@@ -66,3 +74,9 @@
   for = "/robots.txt"
   [headers.values]
     Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/og-image.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+    Content-Type  = "image/svg+xml"

@@ -59,7 +59,7 @@ exports.handler = async () => {
   ];
 
   const postUrls = posts.map(p => ({
-    loc:        `${SITE_BASE}/post/?slug=${encodeURIComponent(p.slug)}`,
+    loc:        `${SITE_BASE}/post/${encodeURIComponent(p.slug)}/`,
     lastmod:    p.lastmod || today,
     changefreq: 'monthly',
     priority:   '0.8',
