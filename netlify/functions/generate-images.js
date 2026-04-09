@@ -2,10 +2,11 @@
 
 const { getStore } = require('@netlify/blobs');
 
-const BLOG_BASE   = 'https://cohomeprotection.blogspot.com';
-const BATCH_SIZE  = 150;
-const TIMEOUT_MS  = 20000;
+const BLOG_BASE       = 'https://cohomeprotection.blogspot.com';
+const BATCH_SIZE      = 150;
+const TIMEOUT_MS      = 20000;
 const DALL_E_DELAY_MS = 14000; // ~4 requests/min — stays under tier-1 rate limit
+const MAX_PER_RUN     = 5;     // Cap per scheduled run; next hourly run picks up the rest
 
 /* ── Blogger helpers ─────────────────────────────────── */
 function getAlternateUrl(entry) {
@@ -145,7 +146,8 @@ exports.handler = async () => {
   }
 
   const needsImage = allPosts.filter(p => !p.hasImage && !manifest[p.slug]);
-  console.log(`generate-images: ${allPosts.length} total posts, ${needsImage.length} need images`);
+  const toProcess  = needsImage.slice(0, MAX_PER_RUN);
+  console.log(`generate-images: ${allPosts.length} total posts, ${needsImage.length} need images, processing ${toProcess.length} this run`);
 
   if (needsImage.length === 0) {
     return { statusCode: 200, body: 'All posts have images — nothing to do.' };
@@ -154,7 +156,7 @@ exports.handler = async () => {
   let generated = 0;
   let failed    = 0;
 
-  for (const post of needsImage) {
+  for (const post of toProcess) {
     try {
       console.log(`Generating image for: ${post.slug}`);
       const buffer = await generateImage(post);
@@ -168,13 +170,14 @@ exports.handler = async () => {
     }
 
     // Throttle to stay under rate limits — skip delay after the last item
-    if (post !== needsImage[needsImage.length - 1]) {
+    if (post !== toProcess[toProcess.length - 1]) {
       await new Promise(r => setTimeout(r, DALL_E_DELAY_MS));
     }
   }
 
+  const remaining = needsImage.length - toProcess.length;
   return {
     statusCode: 200,
-    body: JSON.stringify({ generated, failed, remaining: 0 }),
+    body: JSON.stringify({ generated, failed, remaining }),
   };
 };
