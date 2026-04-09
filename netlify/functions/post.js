@@ -126,8 +126,7 @@ exports.handler = async (event) => {
         statusCode: 200,
         headers: {
           'Content-Type': 'application/json',
-          // Fresh for 10 min; serve stale for up to 2 hrs while revalidating
-          'Cache-Control': 'public, max-age=600, stale-while-revalidate=7200',
+          'Cache-Control': 'public, max-age=60, must-revalidate',
           'Access-Control-Allow-Origin': '*',
         },
         body: JSON.stringify(normalize(match)),
