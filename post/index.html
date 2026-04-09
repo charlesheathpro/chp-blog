@@ -887,6 +887,19 @@
           ${post.content}
         </div>
 
+        <div class="cta-banner" style="margin:32px 0 0">
+          <div class="cta-inner">
+            <h2>Ready to Protect Your Mortgage?</h2>
+            <p>We'll review your situation and show you exactly what coverage options are available — in about 10 minutes.</p>
+            <a href="https://coloradohomeprotection.net" class="btn-gold-lg">See What I Qualify For →</a>
+            <div class="cta-checks">
+              <div class="cta-check"><span class="check-icon">✓</span> Takes 30 seconds</div>
+              <div class="cta-check"><span class="check-icon">✓</span> No obligation</div>
+              <div class="cta-check"><span class="check-icon">✓</span> Licensed in Colorado</div>
+            </div>
+          </div>
+        </div>
+
         <div class="related-wrap" id="related-wrap"></div>
 
         <div class="post-footer">
@@ -897,7 +910,7 @@
         </div>
       </div>`;
 
-    document.getElementById('cta-section').style.display    = '';
+    document.getElementById('cta-section').style.display    = 'none';
     document.getElementById('footer-section').style.display = '';
     loadRelated(post);
     loadPhotoCredit(post);
@@ -926,7 +939,7 @@
         <p style="margin-bottom:16px">${msg}</p>
         <a href="/" style="color:var(--navy);font-weight:600;text-decoration:none">← Back to all articles</a>
       </div>`;
-    document.getElementById('cta-section').style.display    = '';
+    document.getElementById('cta-section').style.display    = 'none';
     document.getElementById('footer-section').style.display = '';
   }
 
