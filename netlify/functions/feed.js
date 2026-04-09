@@ -34,6 +34,11 @@ function rewriteLinks(html) {
   );
 }
 
+function stripLegacyCTA(html) {
+  if (!html) return html;
+  return html.replace(/(<hr[^>]*>\s*)?<h3[^>]*>[^<]*See How This Works[\s\S]*$/i, '');
+}
+
 function bestImage(entry, content, slug) {
   // media:thumbnail is Blogger's own high-quality image — always reliable
   const thumb = entry['media$thumbnail'];
@@ -49,7 +54,7 @@ function bestImage(entry, content, slug) {
 function normalize(entry) {
   const bloggerUrl = getAlternateUrl(entry);
   const slug       = extractSlug(bloggerUrl);
-  const content    = rewriteLinks(entry.content?.['$t'] || entry.summary?.['$t'] || '');
+  const content    = stripLegacyCTA(rewriteLinks(entry.content?.['$t'] || entry.summary?.['$t'] || ''));
   const title      = entry.title?.['$t'] || 'Untitled';
   const published  = entry.published?.['$t'] || null;
   const updated    = entry.updated?.['$t'] || null;

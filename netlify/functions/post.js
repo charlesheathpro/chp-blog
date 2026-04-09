@@ -32,6 +32,12 @@ function rewriteLinks(html) {
   );
 }
 
+function stripLegacyCTA(html) {
+  if (!html) return html;
+  // Remove manually-embedded end-of-post CTAs now injected automatically by the template
+  return html.replace(/(<hr[^>]*>\s*)?<h3[^>]*>[^<]*See How This Works[\s\S]*$/i, '');
+}
+
 function bestImage(entry, content, slug) {
   const thumb = entry['media$thumbnail'];
   if (thumb?.url) return thumb.url.replace(/\/s\d+(-c)?\//g, '/s1200/');
@@ -45,7 +51,7 @@ function bestImage(entry, content, slug) {
 function normalize(entry) {
   const bloggerUrl = getAlternateUrl(entry);
   const slug       = extractSlug(bloggerUrl);
-  const content    = rewriteLinks(entry.content?.['$t'] || entry.summary?.['$t'] || '');
+  const content    = stripLegacyCTA(rewriteLinks(entry.content?.['$t'] || entry.summary?.['$t'] || ''));
   const title      = entry.title?.['$t'] || 'Untitled';
   const published  = entry.published?.['$t'] || null;
   const updated    = entry.updated?.['$t'] || null;
