@@ -931,6 +931,58 @@
     }
   }
 
+  /* ── Link unlinked list items in "Related" sections ────── */
+  function linkRelatedListItems(articleEl, otherPosts) {
+    if (!articleEl) return;
+
+    // Pre-index each post's significant words
+    const postSigs = otherPosts.map(post => {
+      const words = new Set(
+        post.title.toLowerCase()
+          .replace(/[^a-z0-9 ]/g, ' ')
+          .split(/\s+/)
+          .filter(w => w.length > 3 && !STOP_WORDS.has(w))
+      );
+      return { post, words };
+    });
+
+    articleEl.querySelectorAll('li').forEach(li => {
+      const liText = li.textContent.trim();
+      if (!liText) return;
+
+      // Skip if ≥70% of text is already inside an <a>
+      const alreadyLinked = [...li.querySelectorAll('a')]
+        .reduce((n, a) => n + a.textContent.length, 0);
+      if (alreadyLinked / liText.length >= 0.7) return;
+
+      const liWords = new Set(
+        liText.toLowerCase()
+          .replace(/[^a-z0-9 ]/g, ' ')
+          .split(/\s+/)
+          .filter(w => w.length > 3 && !STOP_WORDS.has(w))
+      );
+
+      // Find post whose title shares the most significant words with this li
+      let bestPost  = null;
+      let bestScore = 0;
+      for (const { post, words } of postSigs) {
+        let score = 0;
+        for (const w of words) if (liWords.has(w)) score++;
+        if (score > bestScore) { bestScore = score; bestPost = post; }
+      }
+
+      // Require at least 3 significant word matches to avoid false positives
+      if (!bestPost || bestScore < 3) return;
+
+      const a = document.createElement('a');
+      a.href      = bestPost.canonicalUrl;
+      a.className = 'inline-backlink';
+      a.title     = bestPost.title;
+      while (li.firstChild) a.appendChild(li.firstChild);
+      li.appendChild(a);
+    });
+  }
+
   /* ── Related posts + inline links ─────────────────────── */
   async function loadRelated(currentPost) {
     const wrap = document.getElementById('related-wrap');
@@ -943,6 +995,8 @@
 
       // Inject inline contextual links into article body
       injectInlineLinks(document.querySelector('.article-body'), others);
+      // Link full article titles listed in "Related" sections
+      linkRelatedListItems(document.querySelector('.article-body'), others);
 
       // Score related posts by shared labels, fall back to recency
       const currentLabels = new Set(currentPost.labels || []);

@@ -11,6 +11,9 @@
 [functions."generate-images"]
   schedule = "@hourly"
 
+[functions."scan-backlinks"]
+  schedule = "@daily"
+
 # ── API routes → Netlify Functions ──────────────────────
 [[redirects]]
   from   = "/api/feed"
