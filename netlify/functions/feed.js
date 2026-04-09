@@ -40,7 +40,7 @@ function bestImage(entry, content, slug) {
   if (thumb?.url) return thumb.url.replace(/\/s\d+(-c)?\//g, '/s1200/');
   // AI-generated image preferred over inline content images (which are often
   // hotlink-blocked and cause broken card thumbnails)
-  if (slug) return `/api/post-image?slug=${encodeURIComponent(slug)}`;
+  if (slug) return `/api/post-image?slug=${encodeURIComponent(slug)}&v=2`;
   // Last resort: first <img> in post content
   const m = (content || '').match(/<img[^>]+src=["']([^"']+)["']/i);
   return m ? m[1] : null;
