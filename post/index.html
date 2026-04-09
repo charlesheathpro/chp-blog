@@ -343,6 +343,38 @@
     }
     .btn-gold:hover { background: var(--gold-hover); transform: translateY(-1px); }
 
+    /* ── Post CTA ────────────────────────────────────── */
+    .post-cta-card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 36px 40px;
+      margin: 24px 0 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-dark);
+    }
+    .post-cta-card hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
+    .post-cta-block h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin: 0 0 10px;
+    }
+    .post-cta-block p { margin: 0 0 8px; }
+    .post-cta-block p:last-child { margin: 0; }
+    .post-cta-block a { color: var(--navy); font-weight: 600; }
+    .post-cta-block a:hover { color: var(--gold); }
+    @media (max-width: 700px) {
+      .post-cta-card { padding: 28px 22px; }
+    }
+
     /* ── Read Next ───────────────────────────────────── */
     .related-wrap {
       margin: 40px 0 0;
@@ -853,7 +885,9 @@
       <div class="article-wrap">
         <div class="article-body">
           ${post.content}
-          <hr>
+        </div>
+
+        <div class="post-cta-card">
           <div class="post-cta-block">
             <h3>👉 See How This Works for Your Situation</h3>
             <p>If you want a simple breakdown of how mortgage protection works for homeowners in Colorado:</p>
