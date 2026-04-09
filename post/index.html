@@ -941,38 +941,42 @@
     return title.toLowerCase()
       .replace(/[^a-z0-9 ]/g, ' ')
       .split(/\s+/)
-      .filter(w => w.length > 4 && !STOP_WORDS.has(w));
+      .filter(w => w.length > 3 && !STOP_WORDS.has(w));
+  }
+
+  // Build phrase targets for a post: all adjacent 3-word, all adjacent 2-word pairs,
+  // then individual words — longest first so we prefer specific matches.
+  function buildTargets(post, weight) {
+    const kw = titleToKeywords(post.title);
+    const out = [];
+    for (let i = 0; i <= kw.length - 3; i++)
+      out.push({ phrase: `${kw[i]} ${kw[i+1]} ${kw[i+2]}`, post, weight });
+    for (let i = 0; i <= kw.length - 2; i++)
+      out.push({ phrase: `${kw[i]} ${kw[i+1]}`, post, weight });
+    for (const w of kw)
+      out.push({ phrase: w, post, weight });
+    return out;
   }
 
   function injectInlineLinks(articleEl, otherPosts, relatedPosts = []) {
     if (!articleEl) return;
 
-    // Related posts (pre-computed as most relevant) get aggressive multi-phrase
-    // matching. All others use the original 2-keyword approach.
     const relatedSlugs = new Set(relatedPosts.map(p => p.slug));
     const targets = [];
 
-    for (const post of relatedPosts) {
-      const kw = titleToKeywords(post.title);
-      // Try progressively shorter phrases so something always has a chance to match
-      if (kw.length >= 3) targets.push({ phrase: `${kw[0]} ${kw[1]} ${kw[2]}`, post });
-      if (kw.length >= 2) targets.push({ phrase: `${kw[0]} ${kw[1]}`, post });
-      if (kw.length >= 2) targets.push({ phrase: `${kw[1]} ${kw[0]}`, post }); // reversed pair
-      if (kw.length >= 1) targets.push({ phrase: kw[0], post }); // single-word fallback
-    }
-
+    for (const post of relatedPosts)  targets.push(...buildTargets(post, 2));
     for (const post of otherPosts) {
-      if (relatedSlugs.has(post.slug)) continue;
-      const kw = titleToKeywords(post.title);
-      if (kw.length >= 2) targets.push({ phrase: `${kw[0]} ${kw[1]}`, post });
-      else if (kw.length === 1) targets.push({ phrase: kw[0], post });
+      if (!relatedSlugs.has(post.slug)) targets.push(...buildTargets(post, 1));
     }
 
-    targets.sort((a, b) => b.phrase.length - a.phrase.length);
+    // Longest phrase first; equal length: related before others
+    targets.sort((a, b) =>
+      b.phrase.length - a.phrase.length || b.weight - a.weight
+    );
 
     const usedSlugs = new Set();
     let linkCount   = 0;
-    const MAX_LINKS = 8; // more links for better cross-linking
+    const MAX_LINKS = 8;
 
     // Collect text nodes not already inside <a> or heading tags
     const walker = document.createTreeWalker(articleEl, NodeFilter.SHOW_TEXT, {
@@ -999,7 +1003,8 @@
         const match = node.textContent.match(regex);
         if (!match) continue;
 
-        const [before, after] = node.textContent.split(regex);
+        const before = node.textContent.slice(0, match.index);
+        const after  = node.textContent.slice(match.index + match[0].length);
         const frag = document.createDocumentFragment();
         frag.appendChild(document.createTextNode(before));
 
@@ -1007,12 +1012,10 @@
         a.href      = target.post.canonicalUrl;
         a.className = 'inline-backlink';
         a.title     = target.post.title;
-        a.textContent = match[1];
+        a.textContent = match[0];
         frag.appendChild(a);
 
-        // `after` may contain the matched string in split groups — join the rest
-        const remaining = node.textContent.slice(before.length + match[1].length);
-        frag.appendChild(document.createTextNode(remaining));
+        frag.appendChild(document.createTextNode(after));
 
         node.parentNode.replaceChild(frag, node);
         textNodes.splice(i, 1); // this node is gone
