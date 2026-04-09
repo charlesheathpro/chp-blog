@@ -663,6 +663,33 @@
   const FEED_API  = '/api/feed';
   const SITE_BASE = 'https://blog.coloradohomeprotection.net';
 
+  /* ── Label display names ────────────────────────────── */
+  const LABEL_MAP = {
+    'mortgage protection':  'Mortgage Protection',
+    'life insurance':       'Life Insurance',
+    'homeowners':           'Homeowner Guide',
+    'colorado':             'Colorado Guide',
+    'home insurance':       'Home Insurance',
+    'disability insurance': 'Disability Insurance',
+    'term life':            'Term Life',
+    'whole life':           'Whole Life',
+    'annuities':            'Annuities',
+    'final expense':        'Final Expense',
+    'medicare':             'Medicare',
+  };
+  const LABEL_PRIORITY = [
+    'mortgage protection','life insurance','home insurance',
+    'disability insurance','term life','whole life','annuities',
+    'final expense','medicare','homeowners','colorado',
+  ];
+  function bestLabel(labels) {
+    if (!labels?.length) return 'Resource Guide';
+    for (const key of LABEL_PRIORITY) {
+      if (labels.some(l => l.toLowerCase() === key)) return LABEL_MAP[key];
+    }
+    return labels[0].replace(/\b\w/g, c => c.toUpperCase());
+  }
+
   const qs = new URLSearchParams(window.location.search);
   let currentPage  = Math.max(1, parseInt(qs.get('page') || '1', 10));
   let currentLabel = qs.get('label') || '';
@@ -685,7 +712,7 @@
 
   /* ── Render card ───────────────────────────────────── */
   function renderCard(post) {
-    const cat   = post.labels?.[0] || 'Resource Guide';
+    const cat   = bestLabel(post.labels);
     const thumb = post.image
       ? `<img class="post-thumb" src="${post.image}" alt="${post.title.replace(/"/g,'&quot;')}" loading="lazy"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">${placeholderSvg().replace('class="post-thumb-placeholder"','class="post-thumb-placeholder" style="display:none"')}`
@@ -722,7 +749,7 @@
 
     const all = `<button class="filter-btn ${!currentLabel ? 'active' : ''}" onclick="setLabel('')">All Topics</button>`;
     const pills = labels.map(l =>
-      `<button class="filter-btn ${currentLabel === l ? 'active' : ''}" onclick="setLabel('${l.replace(/'/g,"\\'")}')">${l}</button>`
+      `<button class="filter-btn ${currentLabel === l ? 'active' : ''}" onclick="setLabel('${l.replace(/'/g,"\\'")}')">${bestLabel([l])}</button>`
     ).join('');
     filterEl.innerHTML = all + pills;
   }

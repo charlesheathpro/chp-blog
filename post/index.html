@@ -407,6 +407,16 @@
       padding-top: 8px;
     }
     .related-card:hover .related-card-link { color: var(--gold); }
+    .related-list {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+    .related-list li {
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .related-list li:first-child { border-top: 1px solid var(--border); }
 
     /* ── Post footer ─────────────────────────────────── */
     .post-footer {
@@ -675,6 +685,31 @@
     window.location.replace(`/post/${encodeURIComponent(slug)}/`);
   }
 
+  /* ── Label display map ───────────────────────────────── */
+  const LABEL_MAP = {
+    'mortgage protection':          'Mortgage Protection',
+    'life insurance':               'Life Insurance',
+    'term life insurance':          'Term Life Insurance',
+    'home insurance':               'Home Insurance',
+    'homeowners':                   'Homeowner Guide',
+    'homeowner':                    'Homeowner Guide',
+    'colorado':                     'Colorado Guide',
+  };
+  // Priority: show the most topic-specific label, skip pure geography
+  const LABEL_PRIORITY = [
+    'mortgage protection','life insurance','term life insurance',
+    'home insurance','homeowners','homeowner','colorado',
+  ];
+  function bestLabel(labels) {
+    if (!labels?.length) return 'Resource Guide';
+    for (const key of LABEL_PRIORITY) {
+      if (labels.some(l => l.toLowerCase() === key)) return LABEL_MAP[key];
+    }
+    // Fallback: title-case the first label
+    const l = labels[0];
+    return l.replace(/\b\w/g, c => c.toUpperCase());
+  }
+
   /* ── Helpers ─────────────────────────────────────────── */
   function formatDate(iso) {
     if (!iso) return '';
@@ -710,7 +745,7 @@
   }
 
   function injectJsonLd(post) {
-    const cat      = post.labels?.[0] || 'Resource Guide';
+    const cat      = bestLabel(post.labels);
     const absImage = post.image
       ? (post.image.startsWith('http') ? post.image : `${SITE_BASE}${post.image}`)
       : undefined;
@@ -785,7 +820,7 @@
     setMeta(post);
     injectJsonLd(post);
 
-    const cat          = post.labels?.[0] || 'Resource Guide';
+    const cat          = bestLabel(post.labels);
     const featuredImg  = post.image
       ? `<div class="featured-img-wrap">
            <img class="featured-img" src="${post.image}" alt="${post.title.replace(/"/g,'&quot;')}" loading="eager"
@@ -909,24 +944,35 @@
       .filter(w => w.length > 4 && !STOP_WORDS.has(w));
   }
 
-  function injectInlineLinks(articleEl, otherPosts) {
+  function injectInlineLinks(articleEl, otherPosts, relatedPosts = []) {
     if (!articleEl) return;
 
-    // Build phrase → post map; longer phrases take priority
+    // Related posts (pre-computed as most relevant) get aggressive multi-phrase
+    // matching. All others use the original 2-keyword approach.
+    const relatedSlugs = new Set(relatedPosts.map(p => p.slug));
     const targets = [];
-    for (const post of otherPosts) {
+
+    for (const post of relatedPosts) {
       const kw = titleToKeywords(post.title);
-      if (kw.length >= 2) {
-        targets.push({ phrase: `${kw[0]} ${kw[1]}`, post });
-      } else if (kw.length === 1) {
-        targets.push({ phrase: kw[0], post });
-      }
+      // Try progressively shorter phrases so something always has a chance to match
+      if (kw.length >= 3) targets.push({ phrase: `${kw[0]} ${kw[1]} ${kw[2]}`, post });
+      if (kw.length >= 2) targets.push({ phrase: `${kw[0]} ${kw[1]}`, post });
+      if (kw.length >= 2) targets.push({ phrase: `${kw[1]} ${kw[0]}`, post }); // reversed pair
+      if (kw.length >= 1) targets.push({ phrase: kw[0], post }); // single-word fallback
     }
+
+    for (const post of otherPosts) {
+      if (relatedSlugs.has(post.slug)) continue;
+      const kw = titleToKeywords(post.title);
+      if (kw.length >= 2) targets.push({ phrase: `${kw[0]} ${kw[1]}`, post });
+      else if (kw.length === 1) targets.push({ phrase: kw[0], post });
+    }
+
     targets.sort((a, b) => b.phrase.length - a.phrase.length);
 
     const usedSlugs = new Set();
     let linkCount   = 0;
-    const MAX_LINKS = 4;
+    const MAX_LINKS = 8; // more links for better cross-linking
 
     // Collect text nodes not already inside <a> or heading tags
     const walker = document.createTreeWalker(articleEl, NodeFilter.SHOW_TEXT, {
@@ -1035,31 +1081,46 @@
     if (!wrap) return;
 
     try {
-      const allPosts = await fetchAllPosts();
-      const others   = allPosts.filter(p => p.slug !== currentPost.slug);
+      // Fetch pre-computed related posts and all posts in parallel
+      const [relatedRes, allPosts] = await Promise.all([
+        fetch(`/api/related?slug=${encodeURIComponent(currentPost.slug)}`).catch(() => null),
+        fetchAllPosts(),
+      ]);
+
+      const others = allPosts.filter(p => p.slug !== currentPost.slug);
       if (others.length === 0) return;
 
-      // Inject inline contextual links into article body
-      injectInlineLinks(document.querySelector('.article-body'), others);
-      // Link full article titles listed in "Related" sections
+      // Use pre-computed related list if available, otherwise fall back to label scoring
+      let picks = [];
+      if (relatedRes?.ok) {
+        picks = await relatedRes.json().catch(() => []);
+      }
+      if (!picks.length) {
+        const currentLabels = new Set(currentPost.labels || []);
+        picks = others
+          .map(p => ({ post: p, score: (p.labels || []).filter(l => currentLabels.has(l)).length }))
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 5)
+          .map(s => s.post);
+      }
+
+      // Inject inline links — related picks get aggressive multi-phrase matching
+      injectInlineLinks(document.querySelector('.article-body'), others, picks);
       linkRelatedListItems(document.querySelector('.article-body'), others);
 
-      // Score related posts by shared labels, fall back to recency
-      const currentLabels = new Set(currentPost.labels || []);
-      const scored = others.map(p => ({
-        post:  p,
-        score: (p.labels || []).filter(l => currentLabels.has(l)).length,
-      }));
-      scored.sort((a, b) => b.score - a.score || 0);
-      const picks = scored.slice(0, 3).map(s => s.post);
+      if (!picks.length) return;
 
+      // Render linked list + card grid
       wrap.innerHTML = `
         <div class="related-label">Read Next</div>
-        <div class="related-heading">More for Colorado Homeowners</div>
+        <div class="related-heading">Related for Colorado Homeowners</div>
+        <ul class="related-list">
+          ${picks.map(p => `<li><a href="${p.canonicalUrl}" class="inline-backlink">${p.title}</a></li>`).join('')}
+        </ul>
         <div class="related-grid">
-          ${picks.map(p => `
+          ${picks.slice(0, 3).map(p => `
             <a href="${p.canonicalUrl}" class="related-card">
-              <div class="related-card-cat">${p.labels?.[0] || 'Resource Guide'}</div>
+              <div class="related-card-cat">${bestLabel(p.labels)}</div>
               <div class="related-card-title">${p.title}</div>
               <div class="related-card-date">${formatDate(p.published)}</div>
               <div class="related-card-link">Read article →</div>

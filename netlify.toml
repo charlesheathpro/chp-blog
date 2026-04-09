@@ -14,6 +14,9 @@
 [functions."scan-backlinks"]
   schedule = "@daily"
 
+[functions."inject-related"]
+  schedule = "@hourly"
+
 # ── API routes → Netlify Functions ──────────────────────
 [[redirects]]
   from   = "/api/feed"
@@ -30,6 +33,12 @@
 [[redirects]]
   from   = "/api/post-image"
   to     = "/.netlify/functions/post-image"
+  status = 200
+  force  = true
+
+[[redirects]]
+  from   = "/api/related"
+  to     = "/.netlify/functions/related"
   status = 200
   force  = true
 
