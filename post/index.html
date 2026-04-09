@@ -194,6 +194,19 @@
       box-shadow: 0 20px 60px rgba(0,0,0,0.18);
       display: block;
     }
+    .photo-credit {
+      font-size: 11px;
+      color: var(--text-light);
+      text-align: right;
+      margin-top: 6px;
+      padding-right: 2px;
+    }
+    .photo-credit a {
+      color: var(--text-light);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .photo-credit a:hover { color: var(--text-mid); }
 
     /* ── Article layout ──────────────────────────────── */
     .article-wrap {
@@ -762,6 +775,7 @@
       ? `<div class="featured-img-wrap">
            <img class="featured-img" src="${post.image}" alt="${post.title.replace(/"/g,'&quot;')}" loading="eager"
              onerror="this.closest('.featured-img-wrap').remove()">
+           <div class="photo-credit" id="photo-credit"></div>
          </div>`
       : '';
     const escapedTitle = post.title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
@@ -812,6 +826,23 @@
     document.getElementById('cta-section').style.display    = '';
     document.getElementById('footer-section').style.display = '';
     loadRelated(post);
+    loadPhotoCredit(post);
+  }
+
+  /* ── Pexels photographer credit ──────────────────────── */
+  function loadPhotoCredit(post) {
+    if (!post.image || !post.image.includes('/api/post-image')) return;
+    const el = document.getElementById('photo-credit');
+    if (!el) return;
+    fetch(`/api/photo-credit?slug=${encodeURIComponent(post.slug)}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(meta => {
+        if (!meta?.photographer) return;
+        el.innerHTML =
+          `Photo by <a href="${meta.photographerUrl}" target="_blank" rel="noopener noreferrer">${meta.photographer}</a>` +
+          ` on <a href="${meta.pexelsUrl}" target="_blank" rel="noopener noreferrer">Pexels</a>`;
+      })
+      .catch(() => {});
   }
 
   /* ── Error ───────────────────────────────────────────── */

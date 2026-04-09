@@ -2,11 +2,26 @@
 
 const { getStore } = require('@netlify/blobs');
 
-const BLOG_BASE       = 'https://cohomeprotection.blogspot.com';
-const BATCH_SIZE      = 150;
-const TIMEOUT_MS      = 20000;
-const DALL_E_DELAY_MS = 14000; // ~4 requests/min — stays under tier-1 rate limit
-const MAX_PER_RUN     = 5;     // Cap per scheduled run; next hourly run picks up the rest
+const BLOG_BASE        = 'https://cohomeprotection.blogspot.com';
+const PEXELS_API_BASE  = 'https://api.pexels.com/v1';
+const BATCH_SIZE       = 150;
+const TIMEOUT_MS       = 20000;
+const MAX_PER_RUN      = 15;   // Pexels is fast — no artificial delay needed
+// Bump STORE_VERSION to clear old images and re-fetch from new provider
+const STORE_VERSION    = 'pexels-v1';
+
+const STOP_WORDS = new Set([
+  'about','after','also','always','are','been','before','being','between',
+  'but','can','could','does','doing','done','each','even','every','find',
+  'from','get','gets','got','have','having','help','here','home','how',
+  'into','its','just','know','like','make','many','more','most','much',
+  'need','needs','not','now','often','once','only','other','our','out',
+  'over','plan','right','should','some','take','than','that','their',
+  'them','then','there','they','this','time','under','until','use','used',
+  'using','want','well','what','when','where','which','while','will',
+  'with','work','would','your','the','and','for','you','can','are',
+  'not','was','has','had',
+]);
 
 /* ── Blogger helpers ─────────────────────────────────── */
 function getAlternateUrl(entry) {
@@ -19,8 +34,6 @@ function extractSlug(url) {
 }
 
 function hasOwnImage(entry) {
-  // Only Blogger's own media thumbnail counts — inline <img> tags in content
-  // are often hotlink-blocked and unreliable as card thumbnails.
   return !!entry['media$thumbnail']?.url;
 }
 
@@ -51,7 +64,6 @@ async function fetchAllPosts() {
     for (const entry of entries) {
       const bloggerUrl = getAlternateUrl(entry);
       const slug       = extractSlug(bloggerUrl);
-      const content    = entry.content?.['$t'] || entry.summary?.['$t'] || '';
       const title      = entry.title?.['$t'] || 'Untitled';
       const labels     = (entry.category || []).map(c => c.term).filter(Boolean);
       if (slug) posts.push({ slug, title, labels, hasImage: hasOwnImage(entry) });
@@ -64,80 +76,91 @@ async function fetchAllPosts() {
   return posts;
 }
 
-/* ── Build DALL-E prompt ────────────────────────────── */
-function buildPrompt(post) {
-  const title = post.title;
+/* ── Build Pexels search query ───────────────────────── */
+function buildQuery(post) {
   const label = (post.labels || [])[0] || '';
-  const topic = label.toLowerCase().includes('life')
-    ? 'life insurance and family financial security'
-    : label.toLowerCase().includes('mortgage')
-    ? 'mortgage protection and home ownership security'
-    : 'Colorado homeowner protection and financial peace of mind';
+  const labelLc = label.toLowerCase();
 
-  return (
-    `Professional editorial photograph for a financial services blog article. ` +
-    `Article title: "${title}". Topic: ${topic}. ` +
-    `Scene ideas: a beautiful Colorado home exterior at golden hour, a family relaxing safely in their home, ` +
-    `a Colorado mountain community, or a couple peacefully reviewing finances. ` +
-    `Style: warm natural light, modern lifestyle photography, trustworthy and approachable aesthetic. ` +
-    `Colorado Rocky Mountain setting preferred. ` +
-    `No text, no watermarks, no logos, no handshakes or suits pointing at charts. Photorealistic, landscape orientation.`
-  );
+  // Topic-aware base query
+  const base = labelLc.includes('life')
+    ? 'family life insurance protection'
+    : labelLc.includes('mortgage')
+    ? 'house mortgage family home'
+    : 'colorado home family protection';
+
+  // Pull meaningful words from the title
+  const titleWords = post.title
+    .toLowerCase()
+    .replace(/[^a-z ]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length > 4 && !STOP_WORDS.has(w))
+    .slice(0, 3)
+    .join(' ');
+
+  return (titleWords ? `${titleWords} ${base}` : base).trim();
 }
 
-/* ── Generate image via DALL-E 3 ────────────────────── */
-async function generateImage(post) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error('OPENAI_API_KEY not set');
+/* ── Fetch a photo from Pexels ───────────────────────── */
+async function fetchPexelsPhoto(post) {
+  const apiKey = process.env.PEXELS_API_KEY;
+  if (!apiKey) throw new Error('PEXELS_API_KEY not set');
 
-  const res = await fetch('https://api.openai.com/v1/images/generations', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model:           'dall-e-3',
-      prompt:          buildPrompt(post),
-      n:               1,
-      size:            '1792x1024',
-      quality:         'standard',
-      response_format: 'b64_json',
-    }),
-  });
+  const query = buildQuery(post);
 
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`OpenAI error ${res.status}: ${err}`);
+  const search = async (q) => {
+    const res = await fetch(
+      `${PEXELS_API_BASE}/search?query=${encodeURIComponent(q)}&per_page=10&orientation=landscape&size=large`,
+      { headers: { Authorization: apiKey } }
+    );
+    if (!res.ok) throw new Error(`Pexels ${res.status}: ${await res.text()}`);
+    return res.json();
+  };
+
+  let data = await search(query);
+
+  // Fallback to broader query if no results
+  if (!data.photos?.length) {
+    data = await search('colorado family home protection');
   }
+  if (!data.photos?.length) throw new Error('No Pexels photos found');
 
-  const data  = await res.json();
-  const b64   = data.data?.[0]?.b64_json;
-  if (!b64) throw new Error('No image data in OpenAI response');
+  // Deterministic pick by slug hash so the same post always gets the same photo
+  const hash  = post.slug.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const photo = data.photos[Math.abs(hash) % data.photos.length];
 
-  return Buffer.from(b64, 'base64');
+  return {
+    url:             photo.src.large2x || photo.src.large,
+    photographer:    photo.photographer,
+    photographerUrl: photo.photographer_url,
+    pexelsUrl:       photo.url,
+  };
 }
 
 function getImageStore() {
   return getStore({
-    name:   'post-images',
+    name:   'post-images-v2',
     siteID: process.env.NETLIFY_SITE_ID || process.env.SITE_ID,
     token:  process.env.NETLIFY_AUTH_TOKEN,
   });
 }
 
-/* ── Handler (runs on schedule) ─────────────────────── */
+/* ── Handler (runs @hourly) ──────────────────────────── */
 exports.handler = async () => {
   const store = getImageStore();
 
-  // Load manifest of already-generated slugs
+  // Load manifest; reset if it belongs to a different store version
   let manifest = {};
   try {
     const raw = await store.get('__manifest', { type: 'text' });
-    if (raw) manifest = JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed.__version === STORE_VERSION) {
+        manifest = parsed;
+      }
+      // If version mismatch, start fresh so all posts get new Pexels photos
+    }
   } catch {}
 
-  // Fetch all posts and find ones that need images
   let allPosts;
   try {
     allPosts = await fetchAllPosts();
@@ -147,10 +170,10 @@ exports.handler = async () => {
 
   const needsImage = allPosts.filter(p => !p.hasImage && !manifest[p.slug]);
   const toProcess  = needsImage.slice(0, MAX_PER_RUN);
-  console.log(`generate-images: ${allPosts.length} total posts, ${needsImage.length} need images, processing ${toProcess.length} this run`);
+  console.log(`generate-images: ${allPosts.length} posts total, ${needsImage.length} need photos, processing ${toProcess.length} this run`);
 
   if (needsImage.length === 0) {
-    return { statusCode: 200, body: 'All posts have images — nothing to do.' };
+    return { statusCode: 200, body: 'All posts have photos — nothing to do.' };
   }
 
   let generated = 0;
@@ -158,20 +181,17 @@ exports.handler = async () => {
 
   for (const post of toProcess) {
     try {
-      console.log(`Generating image for: ${post.slug}`);
-      const buffer = await generateImage(post);
-      await store.set(post.slug, buffer, { metadata: { contentType: 'image/png' } });
-      manifest[post.slug] = true;
+      console.log(`Fetching Pexels photo for: ${post.slug}`);
+      const meta = await fetchPexelsPhoto(post);
+      await store.set(post.slug, JSON.stringify(meta));
+      manifest[post.slug]    = true;
+      manifest.__version     = STORE_VERSION;
       await store.set('__manifest', JSON.stringify(manifest));
       generated++;
+      console.log(`  ✓ ${post.slug} → ${meta.photographer}`);
     } catch (err) {
-      console.error(`Failed for ${post.slug}: ${err.message}`);
+      console.error(`  ✗ ${post.slug}: ${err.message}`);
       failed++;
-    }
-
-    // Throttle to stay under rate limits — skip delay after the last item
-    if (post !== toProcess[toProcess.length - 1]) {
-      await new Promise(r => setTimeout(r, DALL_E_DELAY_MS));
     }
   }
 

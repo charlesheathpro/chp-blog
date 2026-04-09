@@ -9,27 +9,36 @@ exports.handler = async (event) => {
   }
 
   const store = getStore({
-    name:   'post-images',
+    name:   'post-images-v2',
     siteID: process.env.NETLIFY_SITE_ID || process.env.SITE_ID,
     token:  process.env.NETLIFY_AUTH_TOKEN,
   });
 
   try {
-    const result = await store.getWithMetadata(slug, { type: 'arrayBuffer' });
-    if (!result || !result.data) {
+    const raw = await store.get(slug, { type: 'text' });
+    if (!raw) {
       return { statusCode: 404, body: 'Image not yet generated' };
     }
 
-    const contentType = result.metadata?.contentType || 'image/png';
+    let meta;
+    try {
+      meta = JSON.parse(raw);
+    } catch {
+      // Old binary format from previous DALL-E version — treat as missing
+      return { statusCode: 404, body: 'Image regenerating' };
+    }
+
+    if (!meta?.url) {
+      return { statusCode: 404, body: 'Invalid image record' };
+    }
+
     return {
-      statusCode: 200,
+      statusCode: 302,
       headers: {
-        'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=31536000, immutable',
-        'Access-Control-Allow-Origin': '*',
+        Location:        meta.url,
+        'Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800',
       },
-      body: Buffer.from(result.data).toString('base64'),
-      isBase64Encoded: true,
+      body: '',
     };
   } catch {
     return { statusCode: 404, body: 'Image not found' };

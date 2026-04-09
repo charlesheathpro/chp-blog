@@ -34,6 +34,12 @@
   force  = true
 
 [[redirects]]
+  from   = "/api/photo-credit"
+  to     = "/.netlify/functions/photo-credit"
+  status = 200
+  force  = true
+
+[[redirects]]
   from   = "/sitemap.xml"
   to     = "/.netlify/functions/sitemap"
   status = 200
