@@ -45,6 +45,12 @@
   status = 200
   force  = true
 
+# ── RSS feed → Blogger native feed ──────────────────────
+[[redirects]]
+  from   = "/feed.xml"
+  to     = "https://cohomeprotection.blogspot.com/feeds/posts/default?alt=rss"
+  status = 301
+
 # ── Legacy ?slug= URLs → clean path (301 permanent) ─────
 [[redirects]]
   from   = "/post/"
