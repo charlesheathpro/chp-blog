@@ -35,14 +35,15 @@ function rewriteLinks(html) {
 }
 
 function bestImage(entry, content, slug) {
-  // media:thumbnail is Blogger's pre-extracted image — upgrade to larger size
+  // media:thumbnail is Blogger's own high-quality image — always reliable
   const thumb = entry['media$thumbnail'];
   if (thumb?.url) return thumb.url.replace(/\/s\d+(-c)?\//g, '/s1200/');
-  // Fall back to first <img> in post content
+  // AI-generated image preferred over inline content images (which are often
+  // hotlink-blocked and cause broken card thumbnails)
+  if (slug) return `/api/post-image?slug=${encodeURIComponent(slug)}`;
+  // Last resort: first <img> in post content
   const m = (content || '').match(/<img[^>]+src=["']([^"']+)["']/i);
-  if (m) return m[1];
-  // Fall back to AI-generated image
-  return slug ? `/api/post-image?slug=${encodeURIComponent(slug)}` : null;
+  return m ? m[1] : null;
 }
 
 function normalize(entry) {

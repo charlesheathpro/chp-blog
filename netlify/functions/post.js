@@ -35,10 +35,11 @@ function rewriteLinks(html) {
 function bestImage(entry, content, slug) {
   const thumb = entry['media$thumbnail'];
   if (thumb?.url) return thumb.url.replace(/\/s\d+(-c)?\//g, '/s1200/');
+  // AI-generated image preferred over inline content images (hotlink-blocked)
+  if (slug) return `/api/post-image?slug=${encodeURIComponent(slug)}`;
+  // Last resort: first <img> in post content
   const m = (content || '').match(/<img[^>]+src=["']([^"']+)["']/i);
-  if (m) return m[1];
-  // Fall back to AI-generated image
-  return slug ? `/api/post-image?slug=${encodeURIComponent(slug)}` : null;
+  return m ? m[1] : null;
 }
 
 function normalize(entry) {

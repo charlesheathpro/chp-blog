@@ -18,10 +18,10 @@ function extractSlug(url) {
   return url.split('/').pop().replace(/\.html$/, '');
 }
 
-function hasOwnImage(entry, content) {
-  if (entry['media$thumbnail']?.url) return true;
-  if ((content || '').match(/<img[^>]+src=["'][^"']+["']/i)) return true;
-  return false;
+function hasOwnImage(entry) {
+  // Only Blogger's own media thumbnail counts — inline <img> tags in content
+  // are often hotlink-blocked and unreliable as card thumbnails.
+  return !!entry['media$thumbnail']?.url;
 }
 
 /* ── Fetch all Blogger posts ─────────────────────────── */
@@ -54,7 +54,7 @@ async function fetchAllPosts() {
       const content    = entry.content?.['$t'] || entry.summary?.['$t'] || '';
       const title      = entry.title?.['$t'] || 'Untitled';
       const labels     = (entry.category || []).map(c => c.term).filter(Boolean);
-      if (slug) posts.push({ slug, title, labels, hasImage: hasOwnImage(entry, content) });
+      if (slug) posts.push({ slug, title, labels, hasImage: hasOwnImage(entry) });
     }
 
     startIndex += BATCH_SIZE;
