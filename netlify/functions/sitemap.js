@@ -54,8 +54,8 @@ exports.handler = async () => {
   const today = new Date().toISOString().split('T')[0];
 
   const staticUrls = [
-    { loc: `${SITE_BASE}/`,         lastmod: today,  changefreq: 'daily',   priority: '1.0' },
-    { loc: `${SITE_BASE}/privacy/`, lastmod: today,  changefreq: 'yearly',  priority: '0.3' },
+    { loc: `${SITE_BASE}/`, lastmod: today, changefreq: 'daily', priority: '1.0' },
+    // privacy page is noindex — excluded from sitemap intentionally
   ];
 
   const postUrls = posts.map(p => ({

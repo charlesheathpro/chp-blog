@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Loading… | Colorado Home Protection</title>
+  <title id="page-title">Colorado Home Protection | Homeowner Resource Center</title>
   <meta name="description" id="page-desc" content="Educational resources for Colorado homeowners on mortgage protection and life insurance.">
   <meta name="robots" content="index, follow">
   <meta property="og:title" id="og-title" content="Colorado Home Protection">
@@ -19,6 +19,18 @@
   <meta name="twitter:description" id="twitter-desc" content="">
   <meta name="twitter:image" id="twitter-image" content="">
   <link rel="canonical" id="canonical" href="https://blog.coloradohomeprotection.net/post/">
+  <script>
+    // Set canonical immediately from URL so crawlers see correct value before JS renders
+    (function () {
+      var parts = window.location.pathname.split('/').filter(Boolean);
+      var slug  = parts.length >= 2 ? parts.slice(1).join('/') : '';
+      if (slug) {
+        var el = document.getElementById('canonical');
+        if (el) el.href = 'https://blog.coloradohomeprotection.net/post/' + slug + '/';
+        document.title = 'Colorado Home Protection | Homeowner Resource Center';
+      }
+    })();
+  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
