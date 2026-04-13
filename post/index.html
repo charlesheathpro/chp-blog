@@ -225,9 +225,22 @@
 
     /* ── Article layout ──────────────────────────────── */
     .article-wrap {
-      max-width: 760px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 36px;
+      align-items: start;
+    }
+    .article-main { min-width: 0; }
+    .article-sidebar {
+      position: sticky;
+      top: 88px;
+    }
+    /* Hide inline CTA on desktop — sidebar handles it */
+    @media (min-width: 901px) {
+      .cta-banner.mobile-cta { display: none; }
     }
 
     /* ── Article body ────────────────────────────────── */
@@ -558,6 +571,139 @@
     }
     .check-icon { color: var(--gold); }
 
+    /* ── Sidebar quote card ──────────────────────────── */
+    .quote-card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      padding: 28px 22px;
+    }
+    .quote-card-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .quote-card-agent {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .quote-card-photo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      flex-shrink: 0;
+    }
+    .quote-card-photo-placeholder {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--navy);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .quote-card-agent-info strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .quote-card-agent-info span {
+      font-size: 11px;
+      color: var(--text-light);
+    }
+    .quote-card-intro {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.65;
+      margin-bottom: 18px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .quote-input {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-family: inherit;
+      color: var(--text-dark);
+      background: var(--bg);
+      transition: border-color 0.18s;
+    }
+    .quote-input:focus {
+      outline: none;
+      border-color: var(--navy);
+      background: #fff;
+    }
+    .quote-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--navy-dark);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 13px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      font-family: inherit;
+      margin-top: 2px;
+    }
+    .quote-submit:hover { background: var(--gold-hover); transform: translateY(-1px); }
+    .quote-submit:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .quote-consent {
+      font-size: 10px;
+      color: var(--text-light);
+      margin-top: 10px;
+      line-height: 1.55;
+      text-align: center;
+    }
+    .quote-success {
+      text-align: center;
+      padding: 8px 0;
+    }
+    .quote-success-icon {
+      width: 48px;
+      height: 48px;
+      background: #d1fae5;
+      color: #059669;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin: 0 auto 14px;
+    }
+    .quote-success h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .quote-success p {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+    .quote-error {
+      font-size: 12px;
+      color: #dc2626;
+      margin-top: 8px;
+      text-align: center;
+    }
+
     /* ── Footer ──────────────────────────────────────── */
     .footer { background: var(--navy-dark); border-top: 1px solid rgba(255,255,255,0.07); padding: 56px 24px 32px; }
     .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.07); }
@@ -604,6 +750,12 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    @media (max-width: 900px) {
+      .article-wrap {
+        grid-template-columns: 1fr;
+      }
+      .article-sidebar { display: none; }
+    }
     @media (max-width: 700px) {
       .article-body { padding: 28px 22px; font-size: 16px; }
       .inline-cta { padding: 28px 24px; gap: 20px; }
@@ -828,6 +980,57 @@
     });
   }
 
+  /* ── Sidebar quote form ──────────────────────────────── */
+  // Phone formatting
+  document.addEventListener('input', function(e) {
+    if (e.target.id !== 'sq-phone') return;
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+    let fmt = digits;
+    if (digits.length > 6) fmt = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
+    else if (digits.length > 3) fmt = '(' + digits.slice(0,3) + ') ' + digits.slice(3);
+    e.target.value = fmt;
+  });
+
+  function submitSidebarQuote() {
+    const nameEl  = document.getElementById('sq-name');
+    const phoneEl = document.getElementById('sq-phone');
+    const errEl   = document.getElementById('sq-error');
+    const btnEl   = document.getElementById('sq-submit');
+
+    const name  = (nameEl?.value || '').trim();
+    const phone = (phoneEl?.value || '').replace(/\D/g, '');
+
+    errEl.style.display = 'none';
+
+    if (!name) { errEl.textContent = 'Please enter your first name.'; errEl.style.display = 'block'; return; }
+    if (phone.length !== 10) { errEl.textContent = 'Please enter a valid 10-digit phone number.'; errEl.style.display = 'block'; return; }
+
+    btnEl.disabled = true;
+    btnEl.textContent = 'Submitting…';
+
+    fetch('https://hooks.zapier.com/hooks/catch/26915552/upwgs49/', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        first_name:       name,
+        phone:            phone,
+        consent_inquiry:  'yes',
+        page_url:         window.location.href,
+        source:           'blog',
+        submitted_at:     new Date().toISOString(),
+      }),
+    }).then(() => {
+      document.getElementById('sidebar-quote-form').style.display   = 'none';
+      document.getElementById('sidebar-quote-success').style.display = 'block';
+    }).catch(() => {
+      errEl.textContent   = 'Something went wrong. Please try again.';
+      errEl.style.display = 'block';
+      btnEl.disabled      = false;
+      btnEl.textContent   = 'Get My Free Quote →';
+    });
+  }
+
   /* ── Share ───────────────────────────────────────────── */
   function handleShare(title) {
     const url = window.location.href;
@@ -883,31 +1086,64 @@
       ${featuredImg}
 
       <div class="article-wrap">
-        <div class="article-body">
-          ${post.content}
-        </div>
+        <div class="article-main">
+          <div class="article-body">
+            ${post.content}
+          </div>
 
-        <div class="cta-banner" style="margin:32px 0 0">
-          <div class="cta-inner">
-            <h2>Ready to Protect Your Mortgage?</h2>
-            <p>We'll review your situation and show you exactly what coverage options are available — in about 10 minutes.</p>
-            <a href="https://coloradohomeprotection.net" class="btn-gold-lg">See What I Qualify For →</a>
-            <div class="cta-checks">
-              <div class="cta-check"><span class="check-icon">✓</span> Takes 30 seconds</div>
-              <div class="cta-check"><span class="check-icon">✓</span> No obligation</div>
-              <div class="cta-check"><span class="check-icon">✓</span> Licensed in Colorado</div>
+          <div class="cta-banner mobile-cta" style="margin:32px 0 0">
+            <div class="cta-inner">
+              <h2>Ready to Protect Your Mortgage?</h2>
+              <p>We'll review your situation and show you exactly what coverage options are available — in about 10 minutes.</p>
+              <a href="https://coloradohomeprotection.net" class="btn-gold-lg">See What I Qualify For →</a>
+              <div class="cta-checks">
+                <div class="cta-check"><span class="check-icon">✓</span> Takes 30 seconds</div>
+                <div class="cta-check"><span class="check-icon">✓</span> No obligation</div>
+                <div class="cta-check"><span class="check-icon">✓</span> Licensed in Colorado</div>
+              </div>
             </div>
+          </div>
+
+          <div class="related-wrap" id="related-wrap"></div>
+
+          <div class="post-footer">
+            <a href="/" class="back-link">← Back to all articles</a>
+            <button class="share-btn" id="share-btn" onclick="handleShare('${escapedTitle}')" type="button">
+              ⇧ Share article
+            </button>
           </div>
         </div>
 
-        <div class="related-wrap" id="related-wrap"></div>
-
-        <div class="post-footer">
-          <a href="/" class="back-link">← Back to all articles</a>
-          <button class="share-btn" id="share-btn" onclick="handleShare('${escapedTitle}')" type="button">
-            ⇧ Share article
-          </button>
-        </div>
+        <aside class="article-sidebar">
+          <div class="quote-card" id="sidebar-quote-card">
+            <div class="quote-card-label">Need Help?</div>
+            <div class="quote-card-agent">
+              <img class="quote-card-photo" src="/images/charles.jpg"
+                alt="Charles Heath — Licensed Colorado Insurance Agent"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="quote-card-photo-placeholder" style="display:none">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c49a2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="quote-card-agent-info">
+                <strong>Charles Heath</strong>
+                <span>Licensed in Colorado</span>
+              </div>
+            </div>
+            <p class="quote-card-intro">I'll review your situation and show you exactly what coverage options are available — usually in about 10 minutes.</p>
+            <div id="sidebar-quote-form">
+              <input class="quote-input" id="sq-name" type="text" placeholder="First name" autocomplete="given-name">
+              <input class="quote-input" id="sq-phone" type="tel" placeholder="Phone number" autocomplete="tel">
+              <button class="quote-submit" id="sq-submit" onclick="submitSidebarQuote()">Get My Free Quote →</button>
+              <p class="quote-error" id="sq-error" style="display:none"></p>
+              <p class="quote-consent">By submitting, you agree to receive texts from Colorado Home Protection LLC. Reply STOP to opt out.</p>
+            </div>
+            <div id="sidebar-quote-success" style="display:none" class="quote-success">
+              <div class="quote-success-icon">✓</div>
+              <h3>We'll be in touch!</h3>
+              <p>Charles will reach out shortly to walk you through your options.</p>
+            </div>
+          </div>
+        </aside>
       </div>`;
 
     document.getElementById('cta-section').style.display    = 'none';
