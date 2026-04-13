@@ -59,6 +59,13 @@
   status = 200
   force  = true
 
+# ── Slug corrections (301 permanent) ────────────────────
+[[redirects]]
+  from   = "/post/blog-post_03/"
+  to     = "/post/mortgage-protection-insurance-in-lakewood-colorado/"
+  status = 301
+  force  = true
+
 # ── RSS feed → Blogger native feed ──────────────────────
 [[redirects]]
   from   = "/feed.xml"
