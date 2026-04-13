@@ -2,6 +2,11 @@
   command = "npm install"
   publish = "."
 
+# ── Edge Functions ───────────────────────────────────────
+[[edge_functions]]
+  path     = "/post/*"
+  function = "post-seo"
+
 [build.environment]
   NODE_VERSION = "18"
 

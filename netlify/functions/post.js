@@ -28,7 +28,7 @@ function rewriteLinks(html) {
   if (!html) return html;
   return html.replace(
     /https?:\/\/cohomeprotection\.blogspot\.com\/(\d{4}\/\d{2}\/)([^"'\s<>]+?)\.html/gi,
-    (_, _path, slug) => `${SITE_BASE}/post/?slug=${slug.split('/').pop()}`
+    (_, _path, slug) => `${SITE_BASE}/post/${encodeURIComponent(slug.split('/').pop())}/`
   );
 }
 
