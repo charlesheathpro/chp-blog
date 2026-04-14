@@ -3,53 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Colorado Home Protection | Homeowner Resource Center</title>
-  <meta name="description" content="Guides and resources for Colorado homeowners on mortgage protection and life insurance. Keep your family's home secure no matter what.">
+  <title>Topic | Colorado Home Protection Blog</title>
+  <meta name="description" content="">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Colorado Home Protection | Homeowner Resource Center">
-  <meta property="og:description" content="Guides and resources for Colorado homeowners on mortgage protection and life insurance.">
-  <meta property="og:url" content="https://blog.coloradohomeprotection.net/">
+  <meta property="og:title" content="Topic | Colorado Home Protection Blog">
+  <meta property="og:description" content="">
+  <meta property="og:url" content="https://blog.coloradohomeprotection.net/topic/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Colorado Home Protection Blog">
   <meta property="og:image" content="https://blog.coloradohomeprotection.net/og-image.svg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Colorado Home Protection | Homeowner Resource Center">
-  <meta name="twitter:description" content="Guides and resources for Colorado homeowners on mortgage protection and life insurance.">
+  <meta name="twitter:title" content="Topic | Colorado Home Protection Blog">
+  <meta name="twitter:description" content="">
   <meta name="twitter:image" content="https://blog.coloradohomeprotection.net/og-image.svg">
-  <link rel="canonical" id="canonical" href="https://blog.coloradohomeprotection.net/">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "url": "https://blog.coloradohomeprotection.net/",
-        "name": "Colorado Home Protection Blog",
-        "description": "Free educational resources for Colorado homeowners on mortgage protection and life insurance.",
-        "publisher": { "@id": "https://coloradohomeprotection.net/#org" }
-      },
-      {
-        "@type": ["Organization", "LocalBusiness"],
-        "@id": "https://coloradohomeprotection.net/#org",
-        "name": "Colorado Home Protection",
-        "url": "https://coloradohomeprotection.net",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://blog.coloradohomeprotection.net/favicon.svg"
-        },
-        "email": "charles@coloradohomeprotection.net",
-        "areaServed": {
-          "@type": "State",
-          "name": "Colorado",
-          "sameAs": "https://en.wikipedia.org/wiki/Colorado"
-        },
-        "knowsAbout": ["Mortgage Protection Insurance", "Life Insurance", "Colorado Home Insurance"]
-      }
-    ]
-  }
-  </script>
+  <link rel="canonical" id="canonical" href="https://blog.coloradohomeprotection.net/topic/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="Colorado Home Protection Blog" href="https://blog.coloradohomeprotection.net/feed.xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -148,15 +117,14 @@
     }
     .nav-cta:hover { background: var(--gold-hover); }
 
-    /* ── Hero ────────────────────────────────────────── */
-    .hero {
+    /* ── Topic header ────────────────────────────────── */
+    .topic-header {
       background: linear-gradient(140deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
-      padding: 80px 24px 88px;
-      text-align: center;
+      padding: 48px 24px 56px;
       position: relative;
       overflow: hidden;
     }
-    .hero::before {
+    .topic-header::before {
       content: '';
       position: absolute;
       top: -120px; right: -80px;
@@ -165,7 +133,7 @@
       background: rgba(196,154,46,0.06);
       pointer-events: none;
     }
-    .hero::after {
+    .topic-header::after {
       content: '';
       position: absolute;
       bottom: -100px; left: -60px;
@@ -174,61 +142,36 @@
       background: rgba(255,255,255,0.025);
       pointer-events: none;
     }
-    .hero-inner {
-      max-width: 680px;
+    .topic-header-inner {
+      max-width: 760px;
       margin: 0 auto;
       position: relative;
       z-index: 1;
     }
-    .hero-badge {
+    .breadcrumb {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(196,154,46,0.12);
-      border: 1px solid rgba(196,154,46,0.28);
-      border-radius: 100px;
-      padding: 6px 16px;
-      margin-bottom: 28px;
+      gap: 6px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.50);
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: color 0.18s;
     }
-    .hero-badge span {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
-    .hero h1 {
+    .breadcrumb:hover { color: rgba(255,255,255,0.80); }
+    .topic-h1 {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(30px, 5vw, 52px);
+      font-size: clamp(26px, 4.5vw, 44px);
       font-weight: 700;
       color: #fff;
-      line-height: 1.18;
-      margin-bottom: 20px;
+      line-height: 1.2;
+      margin-bottom: 16px;
     }
-    .hero h1 em { font-style: italic; color: var(--gold); }
-    .hero p {
-      font-size: 17px;
-      color: rgba(255,255,255,0.68);
-      max-width: 520px;
-      margin: 0 auto 40px;
-      line-height: 1.75;
-    }
-    .hero-stats {
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      flex-wrap: wrap;
-    }
-    .hero-stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--gold);
-    }
-    .hero-stat-label {
-      font-size: 12px;
-      color: rgba(255,255,255,0.45);
-      margin-top: 3px;
+    .topic-intro {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+      max-width: 640px;
     }
 
     /* ── Posts section ───────────────────────────────── */
@@ -251,34 +194,6 @@
       font-weight: 700;
       color: var(--text-dark);
       margin-bottom: 36px;
-    }
-
-    /* ── Category filter ─────────────────────────────── */
-    .filter-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 32px;
-    }
-    .filter-btn {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 6px 16px;
-      border-radius: 100px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--text-mid);
-      cursor: pointer;
-      transition: all 0.18s;
-      font-family: inherit;
-      white-space: nowrap;
-    }
-    .filter-btn:hover { border-color: var(--navy); color: var(--navy); }
-    .filter-btn.active {
-      background: var(--navy);
-      border-color: var(--navy);
-      color: #fff;
     }
 
     /* ── Loading ─────────────────────────────────────── */
@@ -516,7 +431,7 @@
     .footer-links a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.18s; }
     .footer-links a:hover { color: #fff; }
     .footer-topics { display: flex; flex-direction: column; gap: 10px; }
-    .footer-topic-link { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; cursor: pointer; background: none; border: none; font-family: inherit; text-align: left; padding: 0; transition: color 0.18s; }
+    .footer-topic-link { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.18s; }
     .footer-topic-link:hover { color: #fff; }
     .footer-bottom { max-width: 1200px; margin: 28px auto 0; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.22); }
@@ -524,148 +439,13 @@
 
     @media (max-width: 900px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
     @media (max-width: 600px) {
-      .hero { padding: 60px 20px 72px; }
-      .hero-stats { gap: 28px; }
+      .topic-header { padding: 36px 20px 44px; }
       .logo-text { display: none; }
       .cta-banner { padding: 44px 24px; }
       .cta-checks { gap: 16px; }
       .posts-section { padding: 48px 16px 36px; }
       .cta-wrap { padding: 0 16px 56px; }
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-    }
-
-    /* ── Posts header with search ────────────────────────── */
-    .posts-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 32px;
-      flex-wrap: wrap;
-    }
-    .posts-header .section-label { margin-bottom: 6px; }
-    .posts-header .section-title { margin-bottom: 0; }
-
-    /* ── Search ──────────────────────────────────────────── */
-    .search-wrap {
-      position: relative;
-      width: 300px;
-      flex-shrink: 0;
-    }
-    .search-input {
-      width: 100%;
-      padding: 11px 14px 11px 40px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      font-size: 14px;
-      font-family: inherit;
-      background: var(--bg-card);
-      color: var(--text-dark);
-      transition: border-color 0.18s, box-shadow 0.18s;
-    }
-    .search-input:focus {
-      outline: none;
-      border-color: var(--navy);
-      box-shadow: 0 0 0 3px rgba(26,50,86,0.08);
-    }
-    .search-input::placeholder { color: var(--text-light); }
-    .search-icon {
-      position: absolute;
-      left: 13px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-light);
-      pointer-events: none;
-    }
-
-    /* ── Topic strip ─────────────────────────────────────── */
-    .topics-strip {
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 68px;
-      z-index: 90;
-    }
-    .topics-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      overflow-x: auto;
-      scrollbar-width: none;
-      gap: 0;
-    }
-    .topics-inner::-webkit-scrollbar { display: none; }
-    .topic-pill {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 14px 20px;
-      text-decoration: none;
-      color: var(--text-mid);
-      border-bottom: 2px solid transparent;
-      transition: color 0.18s, border-color 0.18s;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .topic-pill:hover { color: var(--navy); border-bottom-color: rgba(26,50,86,0.25); }
-    .topic-pill.active { color: var(--navy); border-bottom-color: var(--gold); font-weight: 600; }
-    .topic-pill-icon { font-size: 18px; line-height: 1; }
-    .topic-pill-name { font-size: 12px; font-weight: 500; }
-    .topic-pill.active .topic-pill-name { font-weight: 700; }
-
-    /* ── Featured card ───────────────────────────────────── */
-    .post-card-featured {
-      grid-column: span 2;
-      flex-direction: row;
-    }
-    .post-card-featured .post-thumb {
-      width: 300px;
-      min-height: 240px;
-      height: auto;
-      flex-shrink: 0;
-      object-fit: cover;
-    }
-    .post-card-featured .post-thumb-placeholder {
-      width: 300px;
-      min-height: 240px;
-      height: auto;
-      flex-shrink: 0;
-    }
-    .post-card-featured .post-title { font-size: 22px; }
-    .post-card-featured .post-excerpt {
-      display: -webkit-box;
-      -webkit-line-clamp: 4;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .featured-badge {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      background: rgba(196,154,46,0.1);
-      border: 1px solid rgba(196,154,46,0.25);
-      padding: 2px 8px;
-      border-radius: 100px;
-      margin-right: 2px;
-    }
-
-    @media (max-width: 700px) {
-      .post-card-featured {
-        grid-column: 1;
-        flex-direction: column;
-      }
-      .post-card-featured .post-thumb,
-      .post-card-featured .post-thumb-placeholder {
-        width: 100%;
-        min-height: 0;
-        height: 200px;
-      }
-      .search-wrap { width: 100%; }
-      .posts-header { flex-direction: column; align-items: flex-start; gap: 16px; }
     }
   </style>
 </head>
@@ -692,79 +472,19 @@
   </div>
 </nav>
 
-<!-- ── Hero ────────────────────────────────────────── -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge"><span>Colorado Homeowner Resources</span></div>
-    <h1>Protect What <em>Matters Most</em><br>to Your Family</h1>
-    <p>Straightforward guides to help Colorado homeowners understand mortgage protection and life insurance — no jargon, no pressure.</p>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-num">5 min</div>
-        <div class="hero-stat-label">Average read time</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">Free</div>
-        <div class="hero-stat-label">Always</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">Local</div>
-        <div class="hero-stat-label">Colorado focused</div>
-      </div>
-    </div>
+<!-- ── Topic Header ──────────────────────────────────── -->
+<header class="topic-header">
+  <div class="topic-header-inner">
+    <a href="/" class="breadcrumb">← All Articles</a>
+    <h1 class="topic-h1" id="topic-h1">Loading…</h1>
+    <p class="topic-intro" id="topic-intro"></p>
   </div>
-</section>
-
-<!-- ── Topic Strip ──────────────────────────────────── -->
-<nav class="topics-strip" aria-label="Browse by topic">
-  <div class="topics-inner">
-    <a href="/" class="topic-pill" data-label="">
-      <span class="topic-pill-icon">📚</span>
-      <span class="topic-pill-name">All Topics</span>
-    </a>
-    <a href="/topic/mortgage-protection/" class="topic-pill" data-label="mortgage protection" data-slug="mortgage-protection">
-      <span class="topic-pill-icon">🛡️</span>
-      <span class="topic-pill-name">Mortgage Protection</span>
-    </a>
-    <a href="/topic/life-insurance/" class="topic-pill" data-label="life insurance" data-slug="life-insurance">
-      <span class="topic-pill-icon">❤️</span>
-      <span class="topic-pill-name">Life Insurance</span>
-    </a>
-    <a href="/topic/term-life/" class="topic-pill" data-label="term life" data-slug="term-life">
-      <span class="topic-pill-icon">📋</span>
-      <span class="topic-pill-name">Term Life</span>
-    </a>
-    <a href="/topic/disability-insurance/" class="topic-pill" data-label="disability insurance" data-slug="disability-insurance">
-      <span class="topic-pill-icon">💼</span>
-      <span class="topic-pill-name">Disability Insurance</span>
-    </a>
-    <a href="/topic/final-expense/" class="topic-pill" data-label="final expense" data-slug="final-expense">
-      <span class="topic-pill-icon">🏡</span>
-      <span class="topic-pill-name">Final Expense</span>
-    </a>
-    <a href="/topic/medicare/" class="topic-pill" data-label="medicare" data-slug="medicare">
-      <span class="topic-pill-icon">⚕️</span>
-      <span class="topic-pill-name">Medicare</span>
-    </a>
-    <a href="/topic/colorado/" class="topic-pill" data-label="colorado" data-slug="colorado">
-      <span class="topic-pill-icon">🏔️</span>
-      <span class="topic-pill-name">Colorado Guides</span>
-    </a>
-  </div>
-</nav>
+</header>
 
 <!-- ── Posts ────────────────────────────────────────── -->
 <section class="posts-section" id="posts-section">
-  <div class="posts-header">
-    <div>
-      <div class="section-label">Browse Articles</div>
-      <div class="section-title" id="section-title">All Guides</div>
-    </div>
-    <div class="search-wrap">
-      <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="search" id="search-input" class="search-input" placeholder="Search articles…" autocomplete="off" aria-label="Search articles">
-    </div>
-  </div>
+  <div class="section-label">Browse Articles</div>
+  <div class="section-title" id="section-title">Loading…</div>
   <div class="post-grid" id="feed">
     <div class="loading">
       <div class="loading-spinner"></div>
@@ -817,10 +537,10 @@
     </div>
     <div>
       <div class="footer-col-title">Topics</div>
-      <div class="footer-topics" id="footer-topics">
-        <a class="footer-topic-link" href="/?label=Mortgage+Protection">Mortgage Protection</a>
-        <a class="footer-topic-link" href="/?label=Life+Insurance">Life Insurance</a>
-        <a class="footer-topic-link" href="/?label=Colorado">Colorado</a>
+      <div class="footer-topics">
+        <a class="footer-topic-link" href="/topic/mortgage-protection/">Mortgage Protection</a>
+        <a class="footer-topic-link" href="/topic/life-insurance/">Life Insurance</a>
+        <a class="footer-topic-link" href="/topic/colorado/">Colorado</a>
       </div>
     </div>
     <div>
@@ -838,9 +558,69 @@
 </footer>
 
 <script>
-  /* ── State ─────────────────────────────────────────── */
+  /* ── Topic metadata (fallback if edge function didn't run) ── */
+  const TOPICS = {
+    'mortgage-protection': {
+      label: 'mortgage protection',
+      h1:    'Mortgage Protection Insurance',
+      intro: 'Mortgage protection insurance pays off or covers your mortgage if you die or become disabled — so your family keeps the house no matter what. These guides explain how it works, what it costs in Colorado, and how to decide if it\'s right for your household.',
+    },
+    'life-insurance': {
+      label: 'life insurance',
+      h1:    'Life Insurance',
+      intro: 'Life insurance is one of the most important financial decisions a homeowner can make. These guides break down the different types of coverage, how much you need, and what to look for when shopping for a policy in Colorado.',
+    },
+    'term-life': {
+      label: 'term life',
+      h1:    'Term Life Insurance',
+      intro: 'Term life insurance provides a death benefit for a fixed number of years — typically 10, 20, or 30. It\'s the most affordable type of life insurance and a common choice for homeowners looking to cover their mortgage. These guides cover everything you need to know.',
+    },
+    'disability-insurance': {
+      label: 'disability insurance',
+      h1:    'Disability Insurance',
+      intro: 'Most homeowners insure their home and their life — but forget to insure their income. Disability insurance replaces a portion of your paycheck if illness or injury prevents you from working. These guides explain how it works and what Colorado homeowners should consider.',
+    },
+    'final-expense': {
+      label: 'final expense',
+      h1:    'Final Expense Insurance',
+      intro: 'Final expense insurance is a small whole life policy designed to cover funeral costs and end-of-life expenses. It\'s easier to qualify for than most life insurance and stays in force for life. These guides help Colorado families understand their options.',
+    },
+    'medicare': {
+      label: 'medicare',
+      h1:    'Medicare',
+      intro: 'Medicare can be confusing. These guides break it down in plain English — from understanding Parts A through D, to choosing a supplement plan, to knowing how Medicare fits alongside your other coverage as a Colorado homeowner.',
+    },
+    'colorado': {
+      label: 'colorado',
+      h1:    'Colorado Homeowner Guides',
+      intro: 'Colorado homeowners face unique considerations when it comes to mortgage protection and life insurance. These guides cover city-specific resources and what Colorado residents should know before buying coverage.',
+    },
+  };
+
+  /* ── Resolve topic data ────────────────────────────── */
+  let topicData = window.__TOPIC__ || null;
+  if (!topicData) {
+    const slug = window.location.pathname.split('/').filter(Boolean)[1] || '';
+    topicData = TOPICS[slug] ? { slug, ...TOPICS[slug] } : null;
+  }
+
+  /* ── Populate header ───────────────────────────────── */
+  if (topicData) {
+    document.getElementById('topic-h1').textContent    = topicData.h1;
+    document.getElementById('topic-intro').textContent = topicData.intro;
+    document.getElementById('section-title').textContent = topicData.h1;
+    document.title = topicData.h1 + ' | Colorado Home Protection Blog';
+  } else {
+    document.getElementById('topic-h1').textContent = 'Topic Guides';
+    document.getElementById('section-title').textContent = 'Topic Guides';
+  }
+
+  /* ── Constants ─────────────────────────────────────── */
   const FEED_API  = '/api/feed';
   const SITE_BASE = 'https://blog.coloradohomeprotection.net';
+
+  /* ── State ─────────────────────────────────────────── */
+  let currentPage = 1;
 
   /* ── Label display names ────────────────────────────── */
   const LABEL_MAP = {
@@ -869,12 +649,6 @@
     return labels[0].replace(/\b\w/g, c => c.toUpperCase());
   }
 
-  const qs = new URLSearchParams(window.location.search);
-  let currentPage   = Math.max(1, parseInt(qs.get('page') || '1', 10));
-  let currentLabel  = qs.get('label') || '';
-  let currentSearch = '';
-  let allPostsCache = null;
-
   /* ── Helpers ───────────────────────────────────────── */
   function formatDate(iso) {
     if (!iso) return '';
@@ -892,22 +666,19 @@
   }
 
   /* ── Render card ───────────────────────────────────── */
-  function renderCard(post, featured = false) {
+  function renderCard(post) {
     const cat   = bestLabel(post.labels);
     const thumb = post.image
       ? `<img class="post-thumb" src="${post.image}" alt="${post.title.replace(/"/g,'&quot;')}" loading="lazy"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">${placeholderSvg().replace('class="post-thumb-placeholder"','class="post-thumb-placeholder" style="display:none"')}`
       : placeholderSvg();
 
-    const featuredBadge = featured ? `<span class="featured-badge">Editor's Pick</span>` : '';
-    const cardClass = featured ? 'post-card post-card-featured' : 'post-card';
-
     return `
-      <a href="${post.canonicalUrl}" class="${cardClass}" data-slug="${post.slug}">
+      <a href="${post.canonicalUrl}" class="post-card" data-slug="${post.slug}">
         ${thumb}
         <div class="post-card-body">
           <div class="post-meta">
-            ${featuredBadge}<span class="post-cat">${cat}</span>
+            <span class="post-cat">${cat}</span>
             <span class="post-date">${formatDate(post.published)}</span>
           </div>
           <h2 class="post-title">${post.title}</h2>
@@ -926,113 +697,22 @@
       <button class="pag-btn" ${!p.hasNext ? 'disabled' : ''} onclick="changePage(${p.page + 1})">Next →</button>`;
   }
 
-  /* ── Render filter bar ─────────────────────────────── */
-  function renderFilterBar(labels) {
-    const filterEl = document.getElementById('filter-bar');
-    if (!filterEl || !labels.length) return;
-
-    const all = `<button class="filter-btn ${!currentLabel ? 'active' : ''}" onclick="setLabel('')">All Topics</button>`;
-    const pills = labels.map(l =>
-      `<button class="filter-btn ${currentLabel === l ? 'active' : ''}" onclick="setLabel('${l.replace(/'/g,"\\'")}')">${bestLabel([l])}</button>`
-    ).join('');
-    filterEl.innerHTML = all + pills;
-  }
-
-  /* ── Cache posts in sessionStorage so post pages load instantly ── */
+  /* ── Cache posts in sessionStorage ─────────────────── */
   function cachePosts(posts) {
     posts.forEach(post => {
       try { sessionStorage.setItem(`chp_v2_post_${post.slug}`, JSON.stringify(post)); } catch {}
     });
   }
 
-  /* ── Update topic strip active state ──────────────── */
-  function updateTopicStrip() {
-    document.querySelectorAll('.topic-pill').forEach(el => {
-      el.classList.toggle('active', el.dataset.label === currentLabel);
-    });
-  }
-
-  /* ── Update section title ──────────────────────────── */
-  function updateSectionTitle() {
-    const el = document.getElementById('section-title');
-    if (!el) return;
-    if (currentSearch) return; // handled in search
-    if (!currentLabel) { el.textContent = 'All Guides'; return; }
-    const map = {
-      'mortgage protection': 'Mortgage Protection',
-      'life insurance': 'Life Insurance',
-      'term life': 'Term Life',
-      'disability insurance': 'Disability Insurance',
-      'final expense': 'Final Expense',
-      'medicare': 'Medicare',
-      'colorado': 'Colorado Guides',
-      'homeowners': 'Homeowner Guides',
-      'home insurance': 'Home Insurance',
-      'whole life': 'Whole Life',
-    };
-    el.textContent = map[currentLabel] || currentLabel.replace(/\b\w/g,c=>c.toUpperCase());
-  }
-
-  /* ── Fetch all posts for search ────────────────────── */
-  async function fetchAllPostsForSearch() {
-    if (allPostsCache) return allPostsCache;
-    try {
-      const cached = sessionStorage.getItem('chp_all_posts_v2');
-      if (cached) { allPostsCache = JSON.parse(cached); return allPostsCache; }
-    } catch {}
-    const first = await fetch(`${FEED_API}?page=1`).then(r => r.json());
-    const total = first.pagination?.totalPages || 1;
-    const pages = [first.posts || []];
-    if (total > 1) {
-      const rest = await Promise.all(
-        Array.from({length: total - 1}, (_, i) =>
-          fetch(`${FEED_API}?page=${i + 2}`).then(r => r.json()).then(d => d.posts || [])
-        )
-      );
-      pages.push(...rest);
-    }
-    allPostsCache = pages.flat();
-    cachePosts(allPostsCache);
-    try { sessionStorage.setItem('chp_all_posts_v2', JSON.stringify(allPostsCache)); } catch {}
-    return allPostsCache;
-  }
-
-  let searchTimer = null;
-  function handleSearch(query) {
-    clearTimeout(searchTimer);
-    currentSearch = query.trim();
-    if (!currentSearch) {
-      updateSectionTitle();
-      loadPosts(currentPage, currentLabel);
-      return;
-    }
-    searchTimer = setTimeout(async () => {
-      const feedEl  = document.getElementById('feed');
-      const paginEl = document.getElementById('pagination');
-      feedEl.innerHTML = '<div class="loading"><div class="loading-spinner"></div><span>Searching…</span></div>';
-      paginEl.innerHTML = '';
-      const posts = await fetchAllPostsForSearch();
-      const q = currentSearch.toLowerCase();
-      const results = posts.filter(p =>
-        p.title.toLowerCase().includes(q) || (p.excerpt || '').toLowerCase().includes(q)
-      );
-      if (!results.length) {
-        feedEl.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">No articles found. Try a different search.</p>';
-      } else {
-        document.getElementById('section-title').textContent = `${results.length} result${results.length !== 1 ? 's' : ''} for "${currentSearch}"`;
-        feedEl.innerHTML = results.map(p => renderCard(p)).join('');
-      }
-    }, 280);
-  }
-
   /* ── Load a page of posts ──────────────────────────── */
-  async function loadPosts(page, label) {
+  async function loadPosts(page) {
     const feedEl  = document.getElementById('feed');
     const paginEl = document.getElementById('pagination');
 
     feedEl.innerHTML  = `<div class="loading"><div class="loading-spinner"></div><span>Loading articles…</span></div>`;
     paginEl.innerHTML = '';
 
+    const label  = topicData ? topicData.label : '';
     let apiUrl = `${FEED_API}?page=${page}`;
     if (label) apiUrl += `&label=${encodeURIComponent(label)}`;
 
@@ -1044,36 +724,12 @@
 
       if (data.posts.length === 0) {
         feedEl.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">No articles found yet. Check back soon.</p>';
-        updateTopicStrip();
-        updateSectionTitle();
         return;
       }
 
       cachePosts(data.posts);
-
-      // Collect unique labels across this page for the filter bar (kept but not called visibly)
-      const allLabels = [...new Set(data.posts.flatMap(p => p.labels || []))].sort();
-      renderFilterBar(allLabels);
-
-      feedEl.innerHTML = data.posts.map((p, i) => renderCard(p, i === 0 && page === 1 && !currentLabel && !currentSearch)).join('');
+      feedEl.innerHTML  = data.posts.map(p => renderCard(p)).join('');
       paginEl.innerHTML = renderPagination(data.pagination);
-
-      // Update URL and canonical
-      const params = new URLSearchParams();
-      if (page > 1)  params.set('page', page);
-      if (label)     params.set('label', label);
-      const search  = params.toString() ? '?' + params.toString() : '';
-      const urlPath = '/' + search;
-      history.pushState({ page, label }, '', urlPath);
-      document.getElementById('canonical').href = `${SITE_BASE}${urlPath}`;
-      document.title = label
-        ? `${label} | Colorado Home Protection`
-        : page === 1
-          ? 'Colorado Home Protection | Homeowner Resource Center'
-          : `Page ${page} | Colorado Home Protection`;
-
-      updateTopicStrip();
-      updateSectionTitle();
 
     } catch (err) {
       feedEl.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">Unable to load articles. Please try again later.</p>';
@@ -1082,51 +738,13 @@
 
   /* ── Page change ───────────────────────────────────── */
   function changePage(page) {
-    currentSearch = '';
-    document.getElementById('search-input').value = '';
     currentPage = page;
-    loadPosts(page, currentLabel);
+    loadPosts(page);
     document.getElementById('posts-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-
-  /* ── Label filter change ───────────────────────────── */
-  function setLabel(label) {
-    currentLabel = label;
-    currentPage  = 1;
-    loadPosts(1, label);
-    document.getElementById('posts-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  /* ── Browser back/forward support ─────────────────── */
-  window.addEventListener('popstate', (e) => {
-    currentPage  = e.state?.page  || 1;
-    currentLabel = e.state?.label || '';
-    loadPosts(currentPage, currentLabel);
-  });
 
   /* ── Boot ──────────────────────────────────────────── */
-  loadPosts(currentPage, currentLabel);
-
-  document.getElementById('search-input').addEventListener('input', e => handleSearch(e.target.value));
-
-  document.querySelectorAll('.topic-pill').forEach(el => {
-    el.addEventListener('click', e => {
-      const slug = el.dataset.slug;
-      // "All Topics" pill (no slug) resets homepage filter
-      if (!slug) {
-        e.preventDefault();
-        currentSearch = '';
-        document.getElementById('search-input').value = '';
-        currentLabel = '';
-        currentPage  = 1;
-        loadPosts(1, '');
-        document.getElementById('posts-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        // Topic pills navigate to the dedicated topic page
-        window.location.href = '/topic/' + slug + '/';
-      }
-    });
-  });
+  loadPosts(currentPage);
 </script>
 </body>
 </html>

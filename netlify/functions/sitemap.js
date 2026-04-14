@@ -53,9 +53,25 @@ exports.handler = async () => {
 
   const today = new Date().toISOString().split('T')[0];
 
+  const topicSlugs = [
+    'mortgage-protection',
+    'life-insurance',
+    'term-life',
+    'disability-insurance',
+    'final-expense',
+    'medicare',
+    'colorado',
+  ];
+
   const staticUrls = [
     { loc: `${SITE_BASE}/`, lastmod: today, changefreq: 'daily', priority: '1.0' },
     // privacy page is noindex — excluded from sitemap intentionally
+    ...topicSlugs.map(slug => ({
+      loc:        `${SITE_BASE}/topic/${slug}/`,
+      lastmod:    today,
+      changefreq: 'weekly',
+      priority:   '0.9',
+    })),
   ];
 
   const postUrls = posts.map(p => ({

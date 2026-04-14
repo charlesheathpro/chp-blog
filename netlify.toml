@@ -7,6 +7,10 @@
   path     = "/post/*"
   function = "post-seo"
 
+[[edge_functions]]
+  path     = "/topic/*"
+  function = "topic-seo"
+
 [build.environment]
   NODE_VERSION = "18"
 
@@ -58,6 +62,12 @@
   to     = "/.netlify/functions/sitemap"
   status = 200
   force  = true
+
+# ── Topic pillar pages → topic/index.html ───────────────
+[[redirects]]
+  from   = "/topic/*"
+  to     = "/topic/index.html"
+  status = 200
 
 # ── Slug corrections (301 permanent) ────────────────────
 [[redirects]]
