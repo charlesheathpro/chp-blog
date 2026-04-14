@@ -64,7 +64,8 @@ exports.handler = async () => {
   ];
 
   const staticUrls = [
-    { loc: `${SITE_BASE}/`, lastmod: today, changefreq: 'daily', priority: '1.0' },
+    { loc: `${SITE_BASE}/`,          lastmod: today, changefreq: 'daily', priority: '1.0' },
+    { loc: `${SITE_BASE}/articles/`, lastmod: today, changefreq: 'daily', priority: '0.8' },
     // privacy page is noindex — excluded from sitemap intentionally
     ...topicSlugs.map(slug => ({
       loc:        `${SITE_BASE}/topic/${slug}/`,

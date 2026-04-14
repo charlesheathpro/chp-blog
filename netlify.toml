@@ -69,6 +69,12 @@
   to     = "/topic/index.html"
   status = 200
 
+# ── Article index ───────────────────────────────────────
+[[redirects]]
+  from   = "/articles/"
+  to     = "/articles/index.html"
+  status = 200
+
 # ── Slug corrections (301 permanent) ────────────────────
 [[redirects]]
   from   = "/post/blog-post_03/"
