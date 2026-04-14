@@ -255,6 +255,44 @@
       color: var(--text-dark);
     }
 
+    /* ── Mid-article CTA callout ─────────────────────── */
+    .inline-cta {
+      border-left: 4px solid var(--gold);
+      background: #f8f6f0;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin: 32px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .inline-cta-text {
+      font-size: 14px;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+    .inline-cta-text strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 15px;
+    }
+    .inline-cta-btn {
+      display: inline-block;
+      background: var(--navy);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.18s;
+      flex-shrink: 0;
+    }
+    .inline-cta-btn:hover { background: var(--navy-dark); }
+
     /* Blogger content typography */
     .article-body h1,
     .article-body h2,
@@ -1125,6 +1163,22 @@
       : '';
     const escapedTitle = post.title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
+    // Inject soft mid-article CTA after 3rd closing </p>
+    const inlineCta = `<div class="inline-cta">
+      <div class="inline-cta-text">
+        <strong>Curious what this looks like for your situation?</strong>
+        Colorado homeowners can see their options in about 30 seconds — no obligation.
+      </div>
+      <a href="https://coloradohomeprotection.net" class="inline-cta-btn" target="_blank" rel="noopener">See My Options →</a>
+    </div>`;
+    const bodyWithCta = (function(html) {
+      let count = 0;
+      return html.replace(/<\/p>/gi, m => {
+        count++;
+        return count === 3 ? '</p>' + inlineCta : m;
+      });
+    })(post.content);
+
     document.getElementById('post-root').innerHTML = `
       <div class="post-header">
         <div class="post-header-inner">
@@ -1148,13 +1202,13 @@
       <div class="article-wrap">
         <div class="article-main">
           <div class="article-body">
-            ${post.content}
+            ${bodyWithCta}
           </div>
 
           <div class="cta-banner mobile-cta" style="margin:32px 0 0">
             <div class="cta-inner">
               <h2>Ready to Protect Your Mortgage?</h2>
-              <p>We'll review your situation and show you exactly what coverage options are available — in about 10 minutes.</p>
+              <p>We'll review your situation and text you your options. During business hours, expect to hear back within 20 minutes.</p>
               <a href="https://coloradohomeprotection.net" class="btn-gold-lg">See What I Qualify For →</a>
               <div class="cta-checks">
                 <div class="cta-check"><span class="check-icon">✓</span> Takes 30 seconds</div>
