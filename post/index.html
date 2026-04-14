@@ -1015,7 +1015,7 @@
   }
 
   /* ── Agent availability status (Mountain Time) ──────── */
-  document.addEventListener('DOMContentLoaded', function() {
+  function updateAgentStatus() {
     const el = document.getElementById('agent-status');
     if (!el) return;
     const now    = new Date();
@@ -1027,7 +1027,7 @@
     el.querySelector('.agent-status-label').textContent = online
       ? 'Online Now'
       : 'Offline · Hours: Mon–Sat, 8am–8pm MT';
-  });
+  }
 
   /* ── Sidebar quote form ──────────────────────────────── */
   // Phone formatting
@@ -1203,6 +1203,7 @@
     document.getElementById('footer-section').style.display = '';
     loadRelated(post);
     loadPhotoCredit(post);
+    updateAgentStatus();
   }
 
   /* ── Pexels photographer credit ──────────────────────── */
