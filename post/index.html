@@ -256,42 +256,45 @@
     }
 
     /* ── Mid-article CTA callout ─────────────────────── */
-    .inline-cta {
-      border-left: 4px solid var(--gold);
-      background: #f8f6f0;
+    .article-body .inline-cta {
+      border-left: 4px solid var(--gold) !important;
+      background: #f8f6f0 !important;
       border-radius: 0 10px 10px 0;
-      padding: 18px 20px;
-      margin: 32px 0;
-      display: flex;
+      padding: 18px 20px !important;
+      margin: 32px 0 !important;
+      display: flex !important;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
       flex-wrap: wrap;
+      max-width: 100%;
     }
-    .inline-cta-text {
-      font-size: 14px;
-      color: var(--text-dark);
-      line-height: 1.5;
+    .article-body .inline-cta-text {
+      font-size: 14px !important;
+      color: var(--text-dark) !important;
+      line-height: 1.5 !important;
+      flex: 1;
     }
-    .inline-cta-text strong {
+    .article-body .inline-cta-text strong {
       display: block;
       margin-bottom: 2px;
-      font-size: 15px;
+      font-size: 15px !important;
+      color: var(--navy-dark) !important;
     }
-    .inline-cta-btn {
-      display: inline-block;
-      background: var(--navy);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 10px 18px;
-      border-radius: 8px;
-      text-decoration: none;
+    .article-body .inline-cta-btn {
+      display: inline-block !important;
+      background: var(--navy) !important;
+      color: #fff !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      padding: 10px 18px !important;
+      border-radius: 8px !important;
+      text-decoration: none !important;
       white-space: nowrap;
       transition: background 0.18s;
       flex-shrink: 0;
     }
-    .inline-cta-btn:hover { background: var(--navy-dark); }
+    .article-body .inline-cta-btn:hover { background: var(--navy-dark) !important; }
 
     /* Blogger content typography */
     .article-body h1,
@@ -354,30 +357,6 @@
       line-height: inherit;
     }
 
-    /* ── Inline CTA ──────────────────────────────────── */
-    .inline-cta {
-      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
-      border-radius: 14px;
-      padding: 36px 40px;
-      margin: 48px 0 0;
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-    .inline-cta-text { flex: 1; min-width: 200px; }
-    .inline-cta-text h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-    .inline-cta-text p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.58);
-      line-height: 1.6;
-    }
     .btn-gold {
       display: inline-flex;
       align-items: center;
