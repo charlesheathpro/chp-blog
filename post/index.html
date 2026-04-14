@@ -1105,6 +1105,17 @@
     injectJsonLd(post);
 
     const cat          = bestLabel(post.labels);
+    const LABEL_TO_SLUG = {
+      'mortgage protection': 'mortgage-protection',
+      'life insurance':      'life-insurance',
+      'term life':           'term-life',
+      'disability insurance':'disability-insurance',
+      'final expense':       'final-expense',
+      'medicare':            'medicare',
+      'colorado':            'colorado',
+    };
+    const topicSlug  = LABEL_TO_SLUG[(cat || '').toLowerCase()] || null;
+    const pillarHref = topicSlug ? `/topic/${topicSlug}/` : '/';
     const featuredImg  = post.image
       ? `<div class="featured-img-wrap">
            <img class="featured-img" src="${post.image}" alt="${post.title.replace(/"/g,'&quot;')}" loading="eager"
@@ -1120,7 +1131,7 @@
           <div class="breadcrumb">
             <a href="/">Blog</a>
             <span class="breadcrumb-sep">/</span>
-            <span class="breadcrumb-cur">${cat}</span>
+            <a href="${pillarHref}" class="breadcrumb-cur">${cat}</a>
           </div>
           <div class="post-cat-pill">${cat}</div>
           <h1 class="post-heading">${post.title}</h1>
@@ -1156,10 +1167,13 @@
           <div class="related-wrap" id="related-wrap"></div>
 
           <div class="post-footer">
-            <a href="/" class="back-link">← Back to all articles</a>
-            <button class="share-btn" id="share-btn" onclick="handleShare('${escapedTitle}')" type="button">
-              ⇧ Share article
-            </button>
+            <a href="${pillarHref}" class="back-link">← More ${cat} guides</a>
+            <div style="display:flex;align-items:center;gap:16px">
+              <a href="https://coloradohomeprotection.net" class="back-link" style="color:var(--gold)" target="_blank" rel="noopener">Get a free quote →</a>
+              <button class="share-btn" id="share-btn" onclick="handleShare('${escapedTitle}')" type="button">
+                ⇧ Share
+              </button>
+            </div>
           </div>
         </div>
 
