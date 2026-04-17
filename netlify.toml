@@ -11,6 +11,10 @@
   path     = "/topic/*"
   function = "topic-seo"
 
+[[edge_functions]]
+  path     = "/articles/"
+  function = "articles-render"
+
 [build.environment]
   NODE_VERSION = "18"
 
