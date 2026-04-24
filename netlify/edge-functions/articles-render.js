@@ -183,6 +183,7 @@ export default async function handler(request, context) {
     <a href="/topic/mortgage-protection/">Mortgage Protection</a>
     <a href="/topic/life-insurance/">Life Insurance</a>
     <a href="/topic/colorado/">Colorado Guides</a>
+    <a href="/calculator/">Premium Calculator</a>
     <a href="https://coloradohomeprotection.net">Get a Free Quote</a>
   </div>
   <p>© 2026 Colorado Home Protection. All rights reserved.</p>

@@ -79,6 +79,12 @@
   to     = "/articles/index.html"
   status = 200
 
+# ── Calculator ──────────────────────────────────────────
+[[redirects]]
+  from   = "/calculator/"
+  to     = "/calculator/index.html"
+  status = 200
+
 # ── Slug corrections (301 permanent) ────────────────────
 [[redirects]]
   from   = "/post/blog-post_03/"
