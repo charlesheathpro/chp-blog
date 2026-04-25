@@ -422,10 +422,6 @@
         <div class="result-item-label">Health Class</div>
         <div class="result-item-value" id="res-health">—</div>
       </div>
-      <div class="result-item">
-        <div class="result-item-label">Annual Estimate</div>
-        <div class="result-item-value" id="res-annual">—</div>
-      </div>
     </div>
   </div>
 
@@ -668,7 +664,6 @@
     document.getElementById('res-coverage').textContent = fmt(mortgage);
     document.getElementById('res-term').textContent     = term + ' years';
     document.getElementById('res-health').textContent   = health.charAt(0).toUpperCase() + health.slice(1);
-    document.getElementById('res-annual').textContent   = fmt(low * 12) + ' – ' + fmt(high * 12);
 
     const resultsCard = document.getElementById('results-card');
     const leadCard    = document.getElementById('lead-card');
