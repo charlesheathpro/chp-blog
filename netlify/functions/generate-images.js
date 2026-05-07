@@ -79,11 +79,13 @@ async function fetchAllPosts() {
 /* ── Per-slug query overrides (bypasses auto-query for known bad results) ── */
 const SLUG_QUERY_OVERRIDES = {
   'what-happens-to-mortgage-when-co-borrower-dies-colorado': 'american couple home mortgage documents USA',
+  'mortgage-protection-insurance-cost-colorado':             'american family home mortgage cost money USA',
 };
 
 /* ── Slugs to force-regenerate on next run (ignores manifest) ── */
 const FORCE_REGEN = new Set([
   'what-happens-to-mortgage-when-co-borrower-dies-colorado',
+  'mortgage-protection-insurance-cost-colorado',
 ]);
 
 /* ── Build Pexels search query ───────────────────────── */
