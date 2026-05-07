@@ -203,6 +203,75 @@ const POST_META = {
 
 };
 
+// ── GEO: Author + Organization (injected on every post) ──────────────────
+// Named licensed expert + org entity = strongest E-E-A-T signal for AI citation
+const AUTHOR_SCHEMA = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${SITE_BASE}/#author`,
+      name: 'Charles Heath',
+      jobTitle: 'Licensed Insurance Agent',
+      description: 'Charles Heath is a licensed insurance agent serving Colorado homeowners with mortgage protection insurance, term life, and related coverage.',
+      url: 'https://coloradohomeprotection.net',
+      worksFor: { '@id': `${SITE_BASE}/#organization` },
+      areaServed: { '@type': 'State', name: 'Colorado' },
+      hasCredential: {
+        '@type': 'EducationalOccupationalCredential',
+        credentialCategory: 'License',
+        recognizedBy: { '@type': 'GovernmentOrganization', name: 'Colorado Division of Insurance' },
+      },
+    },
+    {
+      '@type': 'LocalBusiness',
+      '@id': `${SITE_BASE}/#organization`,
+      name: 'Colorado Home Protection LLC',
+      url: 'https://coloradohomeprotection.net',
+      logo: `${SITE_BASE}/favicon.svg`,
+      description: 'Licensed Colorado insurance agency specializing in mortgage protection insurance and life insurance for Colorado homeowners.',
+      areaServed: { '@type': 'State', name: 'Colorado' },
+      knowsAbout: [
+        'Mortgage Protection Insurance',
+        'Term Life Insurance',
+        'Life Insurance',
+        'Disability Insurance',
+        'Colorado Insurance Law',
+      ],
+    },
+  ],
+});
+
+// ── Build Article schema for a post ──────────────────────────────────────
+function buildArticleSchema(slug, title, description, canonical) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description: description,
+    url: canonical,
+    author: { '@id': `${SITE_BASE}/#author` },
+    publisher: { '@id': `${SITE_BASE}/#organization` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.article-body p:first-of-type', 'h1'],
+    },
+  });
+}
+
+// ── Build BreadcrumbList schema ───────────────────────────────────────────
+function buildBreadcrumbSchema(slug, title, canonical) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Blog Home', item: SITE_BASE + '/' },
+      { '@type': 'ListItem', position: 2, name: title, item: canonical },
+    ],
+  });
+}
+
 // ── Build FAQPage JSON-LD from faq array ──────────────────────────────────
 function buildFaqSchema(faqItems) {
   return JSON.stringify({
@@ -243,6 +312,16 @@ export default async function handler(request, context) {
       /<link rel="canonical" id="canonical"[^>]*>/,
       `<link rel="canonical" id="canonical" href="${canonical}">`
     );
+
+    // ── Always: inject author, org, article & breadcrumb schema (GEO) ────
+    const title       = meta?.title       || slug.replace(/-/g, ' ');
+    const description = meta?.description || '';
+    const geoSchemas  = [
+      `<script type="application/ld+json">${AUTHOR_SCHEMA}</script>`,
+      `<script type="application/ld+json">${buildArticleSchema(slug, title, description, canonical)}</script>`,
+      `<script type="application/ld+json">${buildBreadcrumbSchema(slug, title, canonical)}</script>`,
+    ].join('\n');
+    html = html.replace('</head>', `${geoSchemas}\n</head>`);
 
     // ── If slug has overrides: inject title, meta description, FAQ schema ─
     if (meta) {
