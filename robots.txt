@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /.netlify/
+Disallow: /feeds/
+Disallow: /search
+Disallow: /*?*
 
 Sitemap: https://blog.coloradohomeprotection.net/sitemap.xml
