@@ -85,6 +85,22 @@
   to     = "/calculator/index.html"
   status = 200
 
+# ── Strip ?label= query params → homepage (301 permanent) ──────────────
+[[redirects]]
+  from   = "/"
+  to     = "/"
+  status = 301
+  force  = true
+  query  = {label = ":label"}
+
+# ── Blogger-format URLs → clean /post/ URLs (301 permanent) ─────────────
+# Handles: /YYYY/MM/slug.html and /YYYY/MM/slug.html?m=1
+[[redirects]]
+  from   = "/:year/:month/:slug.html"
+  to     = "/post/:slug/"
+  status = 301
+  force  = true
+
 # ── Slug corrections (301 permanent) ────────────────────
 [[redirects]]
   from   = "/post/blog-post_03/"
