@@ -76,8 +76,20 @@ async function fetchAllPosts() {
   return posts;
 }
 
+/* ── Per-slug query overrides (bypasses auto-query for known bad results) ── */
+const SLUG_QUERY_OVERRIDES = {
+  'what-happens-to-mortgage-when-co-borrower-dies-colorado': 'american couple home mortgage documents USA',
+};
+
+/* ── Slugs to force-regenerate on next run (ignores manifest) ── */
+const FORCE_REGEN = new Set([
+  'what-happens-to-mortgage-when-co-borrower-dies-colorado',
+]);
+
 /* ── Build Pexels search query ───────────────────────── */
 function buildQuery(post) {
+  if (SLUG_QUERY_OVERRIDES[post.slug]) return SLUG_QUERY_OVERRIDES[post.slug];
+
   const label = (post.labels || [])[0] || '';
   const labelLc = label.toLowerCase();
 
@@ -167,6 +179,9 @@ exports.handler = async () => {
   } catch (err) {
     return { statusCode: 502, body: `Failed to fetch posts: ${err.message}` };
   }
+
+  // Clear force-regen slugs from manifest so they get re-fetched
+  for (const slug of FORCE_REGEN) delete manifest[slug];
 
   const needsImage = allPosts.filter(p => !p.hasImage && !manifest[p.slug]);
   const toProcess  = needsImage.slice(0, MAX_PER_RUN);
