@@ -79,11 +79,12 @@
   to     = "/articles/index.html"
   status = 200
 
-# ── Calculator ──────────────────────────────────────────
+# ── Calculator → landing page ────────────────────────────
 [[redirects]]
   from   = "/calculator/"
-  to     = "/calculator/index.html"
-  status = 200
+  to     = "https://coloradohomeprotection.net/calculator"
+  status = 301
+  force  = true
 
 # ── Strip ?label= query params → homepage (301 permanent) ──────────────
 [[redirects]]
